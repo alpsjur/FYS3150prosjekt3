@@ -1,11 +1,3 @@
-//#include "mpi.h"
-#include <cmath>
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <cstdlib>
-#include <armadillo>
-
 #include "metropolis.hpp"
 
 void solveGivenT(int L, int mcs, double T, double k, double J, double *values, long &idum, bool ordered){
@@ -18,7 +10,7 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values, l
     w[i*4] = exp(-beta*J*(i*4-8));
   }
   double E = 0; double M = 0;
-  initialize(L, spinMatrix, E, M, J, ordered);
+  initialize(L, spinMatrix, values, E, M, J, ordered);
   //går gjennom gitt antall monte carlo sykluser (mcs)
   for (int i = 0; i < mcs; ++i){
     metropolis(L, spinMatrix, idum, E, M, w, J);
@@ -28,12 +20,6 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values, l
     values[3] += M*M;
     values[4] += M;
   }
-  for (int i = 0; i <= 4; ++i){
-    values[i] /= (double) mcs;    //beregner gjennomsnittet av alle mc-syklusene
-  }
-  values[1] = (values[1]-values[0]*values[0])/(k*T*T*nSpins);      //beregner varmekapasiteten
-  values[3] = (values[3]-values[2]*values[2])/(k*T*nSpins);        //beregner susceptibilit
-  values[0] /= nSpins; values[2] /= nSpins; values[4] /= nSpins;   //forventning per spinn
 }
 void metropolis(int L, imat &spinMatrix, long &idum, double &E, double &M,double *w, double J){
   //itererer over alle spinnene
@@ -59,7 +45,7 @@ void metropolis(int L, imat &spinMatrix, long &idum, double &E, double &M,double
   return;
 }
 
-void initialize(int L, imat &spinMatrix, double &E, double &M, double J, bool ordered){
+void initialize(int L, imat &spinMatrix, double *values, double &E, double &M, double J, bool ordered){
   //initsialiserer total magnetisering
   M = L*L;
 
@@ -80,6 +66,12 @@ void initialize(int L, imat &spinMatrix, double &E, double &M, double J, bool or
     }
   }
   E = calculateTotalEnergy(L, spinMatrix, J);
+
+  //nullstiller beregnede forventningsverdier
+  for (int i=0; i<5; ++i){
+    values[i] = 0;
+  }
+
   return;
 }
 
@@ -95,6 +87,32 @@ double calculateTotalEnergy(int L, imat spinMatrix, double J){
     }
   }
   return E;
+}
+
+void calculateVarNormalize(double *values, int L, int mcs){
+  int nSpins = L*L;
+  for (int i = 0; i <= 4; ++i){
+    values[i] /= (double) mcs;    //beregner gjennomsnittet av alle mc-syklusene
+  }
+  values[1] = (values[1]-values[0]*values[0])/(nSpins);      //beregner variansen til E per spinn
+  values[3] = (values[3]-values[4]*values[4])/(nSpins);      //beregner variansen til M per spinn
+  values[0] /= nSpins; values[2] /= nSpins; values[4] /= nSpins;   //forventning per spinn
+}
+
+void calculateCChi(double *values, double k, double T){
+  values[1] /= k*T*T;
+  values[3] /= k*T;
+}
+
+void writeToFile(ofstream ofile, double *values, double T, int mcs){
+  ofile << setiosflags(ios::showpoint | ios::uppercase);
+  ofile << setw(15) << setprecision(8) << mcs;
+  ofile << setw(15) << setprecision(8) << T;
+  ofile << setw(15) << setprecision(8) << values[0];
+  ofile << setw(15) << setprecision(8) << values[1];
+  ofile << setw(15) << setprecision(8) << values[2];
+  ofile << setw(15) << setprecision(8) << values[3];
+  ofile << setw(15) << setprecision(8) << values[4] << endl;
 }
 
 

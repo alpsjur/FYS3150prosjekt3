@@ -8,6 +8,8 @@ TEST_CASE("Tester om vi faar riktige forventningsverdier for L=2"){
   int nSpins = L*L; bool ordered=true;
 
   solveGivenT(L, mcs, T, k, J, values, idum, ordered);
+  calculateVarNormalize(values, L, mcs);
+  calculateCChi(values, k, T);
 
 
   int degeneracy[6] = {1,4,4,2,4,1};
@@ -16,13 +18,14 @@ TEST_CASE("Tester om vi faar riktige forventningsverdier for L=2"){
 
   double p;
   double Z = 0;
-  double analyticalE = 0; double analyticalM = 0;
+  double analyticalE = 0; double analyticalAbsM = 0; double analyticalM = 0;
   double EE = 0;  double MM = 0;
   for (int i=0; i<6; ++i){
     p = degeneracy[i]*exp(-beta*energy[i]);
     Z += p;
     analyticalE += energy[i]*p;
-    analyticalM += fabs(magnetization[i])*p;
+    analyticalM += magnetization[i]*p;
+    analyticalAbsM += fabs(magnetization[i])*p;
     EE += energy[i]*energy[i]*p;
     MM += magnetization[i]*magnetization[i]*p;
   }
@@ -32,10 +35,12 @@ TEST_CASE("Tester om vi faar riktige forventningsverdier for L=2"){
   double analyticalChi = (MM-analyticalM*analyticalM)/(k*T*nSpins);
   analyticalE /= nSpins;
   analyticalM /= nSpins;
+  analyticalAbsM /= nSpins*Z;
 
+  //cout << analyticalE << " " << analyticalC << " " << analyticalM << " " << analyticalChi << endl;
   REQUIRE(fabs(values[0]/analyticalE) == Approx(1).epsilon(0.001));
   REQUIRE(fabs(values[1]/analyticalC) == Approx(1).epsilon(0.01));
-  REQUIRE(fabs(values[2]/analyticalM) == Approx(1).epsilon(0.001));
+  REQUIRE(fabs(values[2]/analyticalAbsM) == Approx(1).epsilon(0.001));
   REQUIRE(fabs(values[3]/analyticalChi) == Approx(1).epsilon(0.01));
 
 }

@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <armadillo>
+#include <string>
 using namespace  std;
 using namespace arma;
 
@@ -20,15 +21,29 @@ inline int periodic(int i, int L){
 double calculateTotalEnergy(int, imat, double);
 
 //funksjon som initsialiserer systemet
-void initialize(int L, imat &spinMatrix, double &E, double &M, double J, bool);
+void initialize(int L, imat &spinMatrix, double *values,double &E, double &M, double J, bool);
 
 //mertropolis-algoritmen
 void metropolis(int L, imat &spinMatrix, long &idum, double &E, double &M,double *w, double J);
 
-//
+//finner forventningsverdier gitt temperatur ved MonteCarlo-metoden
 void solveGivenT(int, int, double, double, double, double *, long &, bool);
 
-//random number generator, initsialiseres med negativt frø/seed
+//bergener variansen til E og M, og nrmaliserer med hensyn på antall monte carlo-sykluser og antall spinn
+void calculateVarNormalize(double *values, int L, int mcs);
+
+//funnksjon som beregner varmekapasiteten og susceptibiliteten
+void calculateCChi(double *values, double k, double T);
+
+//skriver beregnede verdier til fil
+void writeToFile(ofstream ofile,double *values, double T, int mcs);
+
+//parallelisert løsning for flere T-verdier
+void MPIsolve(int argc, char* argv[], string outfilename, int L, int mcs,
+              double J, double k ,double initialT, double finalT, double dT,
+              bool ordered);
+
+//random number generator, initsialiseres med negativt frø/seed. Kopiert fra Mortens kode
 double ran2(long*);
 
 #endif /* METROPOLIS_H */
