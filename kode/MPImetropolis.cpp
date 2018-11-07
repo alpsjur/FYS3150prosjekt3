@@ -10,8 +10,6 @@ Project-path username$ mpirun -n 2 ./MPImetropolis.exe filnavn
 
 ofstream ofile;
 void writeToFile(double *values, double T);
-void output(int n_spins, int mcs, double temperature, double *total_average);
-
 
 int main(int argc, char* argv[]){
   int L = 2;
@@ -23,10 +21,12 @@ int main(int argc, char* argv[]){
   double dT = 0.1;
   bool ordered = true;
 
+
   char *outfilename;
   long idum;
   int my_rank, numprocs;
-  double w[17], values[5], collectedValues[5], E, M;
+  double values[5], collectedValues[5], E, M;
+  double p[1000];
 
   //  MPI initsialisering
   MPI_Init (&argc, &argv);
@@ -56,7 +56,8 @@ int main(int argc, char* argv[]){
   double  TimeStart, TimeEnd, TotalTime;
   TimeStart = MPI_Wtime();
   for ( double T = initialT; T <= finalT; T += dT){
-    solveGivenT(L, my_mcs, T, k, J, values, idum, ordered);
+    int count = 0;
+    solveGivenT(L, my_mcs, T, k, J, values, idum, ordered, count, p);
 
     // finner totalt gjennomsnitt
     for( int i =0; i < 5; i++){
@@ -86,25 +87,6 @@ int main(int argc, char* argv[]){
   return 0;
 }
 
-void output(int n_spins, int mcs, double temperature, double *total_average)
-{
-  double norm = 1/((double) (mcs));  // divided by total number of cycles
-  double Etotal_average = total_average[0]*norm;
-  double E2total_average = total_average[1]*norm;
-  double Mtotal_average = total_average[4]*norm;
-  double M2total_average = total_average[3]*norm;
-  double Mabstotal_average = total_average[2]*norm;
-  // all expectation values are per spin, divide by 1/n_spins/n_spins
-  double Evariance = (E2total_average- Etotal_average*Etotal_average)/n_spins/n_spins;
-  double Mvariance = (M2total_average - Mtotal_average*Mtotal_average)/n_spins/n_spins;
-  ofile << setiosflags(ios::showpoint | ios::uppercase);
-  ofile << setw(15) << setprecision(8) << temperature;
-  ofile << setw(15) << setprecision(8) << Etotal_average/n_spins/n_spins;
-  ofile << setw(15) << setprecision(8) << Evariance/temperature/temperature;
-  ofile << setw(15) << setprecision(8) << Mtotal_average/n_spins/n_spins;
-  ofile << setw(15) << setprecision(8) << Mvariance/temperature;
-  ofile << setw(15) << setprecision(8) << Mabstotal_average/n_spins/n_spins << endl;
-} // end output function
 
 void writeToFile(double *values, double T){
   ofile << setiosflags(ios::showpoint | ios::uppercase);

@@ -23,11 +23,8 @@ double calculateTotalEnergy(int, imat, double);
 //funksjon som initsialiserer systemet
 void initialize(int L, imat &spinMatrix, double *values,double &E, double &M, double J, bool);
 
-//mertropolis-algoritmen
-void metropolis(int L, imat &spinMatrix, long &idum, double &E, double &M,double *w, double J);
-
 //finner forventningsverdier gitt temperatur ved MonteCarlo-metoden
-void solveGivenT(int, int, double, double, double, double *, long &, bool);
+void solveGivenT(int, int, double, double, double, double *, long &, bool, int&, double *);
 
 //bergener variansen til E og M, og nrmaliserer med hensyn på antall monte carlo-sykluser og antall spinn
 void calculateVarNormalize(double *values, int L, int mcs);

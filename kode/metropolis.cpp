@@ -1,10 +1,13 @@
 #include "metropolis.hpp"
 
-void solveGivenT(int L, int mcs, double T, double k, double J, double *values, long &idum, bool ordered){
+void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
+                 long &idum, bool ordered, int &count, double *p){
   double beta = 1/(k*T);
   double w[17];
   imat spinMatrix;
   double nSpins = L*L;
+  int sumP = 0;
+  int deltaE;
   //regner ut mulige w-verdier
   for (int i=0; i<5; ++i){
     w[i*4] = exp(-beta*J*(i*4-8));
@@ -13,39 +16,45 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values, l
   initialize(L, spinMatrix, values, E, M, J, ordered);
   //går gjennom gitt antall monte carlo sykluser (mcs)
   for (int i = 0; i < mcs; ++i){
-    metropolis(L, spinMatrix, idum, E, M, w, J);
+    //går gjennom alle spinnene
+    for (int j=0; j < nSpins; ++j){
+      //velger et tilfeldig spinn
+      int k = (int) (ran2(&idum)*(double)L);
+      int l = (int) (ran2(&idum)*(double)L);
+      //beregner endring i energi
+      deltaE = (spinMatrix(k,periodic(l+1,L))+
+                spinMatrix(k,periodic(l-1,L))+
+                spinMatrix(periodic(k+1,L),l)+
+                spinMatrix(periodic(k-1,L),l))*
+                spinMatrix(k,l)*2;
+      //Utfører metropolis-testen
+      if (ran2(&idum) <= w[deltaE+8]){
+        spinMatrix(k,l) *= -1;
+        E += (double) deltaE*J;
+        M += (double) 2*spinMatrix(k,l);
+        //teller antall ganger ny tilstand aksepteres
+        count++;
+        //beregner sannsynliget for energitilstandene
+        if (i > 1e5){
+          p[(int)-E]++;
+          sumP++;
+        }
+      }
+    }
+    //metropolis(L, spinMatrix, idum, E, M, w, J, count, p, i);
     values[0] += E;
     values[1] += E*E;
     values[2] += fabs(M);
     values[3] += M*M;
     values[4] += M;
   }
-}
-void metropolis(int L, imat &spinMatrix, long &idum, double &E, double &M,double *w, double J){
-  //itererer over alle spinnene
-  int deltaE;
-  int nSpins = L*L;
-  for (int i=0; i < nSpins; ++i){
-    //velger et tilfeldig spinn
-    int k = (int) (ran2(&idum)*(double)L);
-    int l = (int) (ran2(&idum)*(double)L);
-    //beregner endring i energi
-    deltaE = (spinMatrix(k,periodic(l+1,L))+
-              spinMatrix(k,periodic(l-1,L))+
-              spinMatrix(periodic(k+1,L),l)+
-              spinMatrix(periodic(k-1,L),l))*
-              spinMatrix(k,l)*2;
-    //Utfører metropolis-testen
-    if (ran2(&idum) <= w[deltaE+8]){
-      spinMatrix(k,l) *= -1;
-      E += (double) deltaE*J;
-      M += (double) 2*spinMatrix(k,l);
-    }
+  for (int i = 0; i < 1000; i++){
+    p[i] /= sumP;
   }
-  return;
 }
 
-void initialize(int L, imat &spinMatrix, double *values, double &E, double &M, double J, bool ordered){
+void initialize(int L, imat &spinMatrix, double *values, double &E, double &M,
+                double J, bool ordered){
   //initsialiserer total magnetisering
   M = L*L;
 
