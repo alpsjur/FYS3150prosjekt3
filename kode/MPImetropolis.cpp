@@ -8,19 +8,20 @@ Project-path username$ mpirun -n 2 ./MPImetropolis.exe filnavn
 #include "metropolis.hpp"
 #include "mpi.h"
 
-ofstream ofile;
+
+//ofstream ofile;
 void writeToFile(double *values, double T);
 void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
                  long &idum, bool ordered);
 
 int main(int argc, char* argv[]){
-  int L = 2;
+  int L = 40;
   int mcs = 1e5;
   double J = 1;
   double k = 1;
-  double initialT = 1;
-  double finalT = 2;
-  double dT = 0.1;
+  double initialT = 2;
+  double finalT = 2.3;
+  double dT = 0.05;
   bool ordered = true;
 
 
@@ -28,16 +29,17 @@ int main(int argc, char* argv[]){
   long idum;
   int my_rank, numprocs;
   double values[5], collectedValues[5], E, M;
-  double p[1000];
 
   //  MPI initsialisering
   MPI_Init (&argc, &argv);
   MPI_Comm_size (MPI_COMM_WORLD, &numprocs);
   MPI_Comm_rank (MPI_COMM_WORLD, &my_rank);
 
+  ofstream ofile;
   if (my_rank == 0) {
     outfilename = argv[1];
-    ofile.open(outfilename);
+    //ofile.open(outfilename);
+    ofile.open(outfilename, ofstream::binary);
   }
 
 
@@ -70,16 +72,17 @@ int main(int argc, char* argv[]){
     if ( my_rank == 0) {
       calculateVarNormalize(collectedValues, L, mcs);
       calculateCChi(collectedValues, k, T);
-      writeToFile(collectedValues, T);
-      //output(L, mcs, T, collectedValues);
+      //writeToFile(collectedValues, T);
+      ofile.write(reinterpret_cast<const char*>(&T), sizeof(double));
+      ofile.write(reinterpret_cast<const char*>(collectedValues), 5*sizeof(double));
     }
   }
 
 
-  ofile.close();  // close output file
   TimeEnd = MPI_Wtime();
   TotalTime = TimeEnd-TimeStart;
   if ( my_rank == 0) {
+    ofile.close();  // close output file
     cout << "Time = " <<  TotalTime  << " on number of processors: "  << numprocs  << endl;
   }
 
@@ -132,7 +135,7 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
   }
 }
 
-
+/*
 void writeToFile(double *values, double T){
   ofile << setiosflags(ios::showpoint | ios::uppercase);
   ofile << setw(15) << setprecision(8) << T;
@@ -142,3 +145,4 @@ void writeToFile(double *values, double T){
   ofile << setw(15) << setprecision(8) << values[3];
   ofile << setw(15) << setprecision(8) << values[4] << endl;
 }
+*/

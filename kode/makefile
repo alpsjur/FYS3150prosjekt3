@@ -3,7 +3,7 @@
 # Here we define compiler option, libraries and the  target
 CPPflags = c++ -std=c++0x -O3
 
-MPIflags = mpic++ -std=c++11 -O3
+MPIflags = mpic++ -std=c++11 -O3 
 # Here we define the library functions we nee
 LIB = -larmadillo -llapack -lblas
 # Here we define the name of the executable

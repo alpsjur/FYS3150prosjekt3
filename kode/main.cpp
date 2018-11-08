@@ -14,23 +14,23 @@ void solveForDifferentMCS(double T, bool ordered, string filename);
 void calculateProbability(double T, string filename);
 
 int main(int argc, char const *argv[]) {
-  /*
-  string file1 = "../data/EMvsMCS_ordered_1.dat";
-  string file2 = "../data/EMvsMCS_unordered_1.dat";
-  string file3 = "../data/EMvsMCS_ordered_24.dat";
-  string file4 = "../data/EMvsMCS_unordered_24.dat";
+
+  string file1 = "../data/EMvsMCS_ordered_1.bin";
+  string file2 = "../data/EMvsMCS_unordered_1.bin";
+  string file3 = "../data/EMvsMCS_ordered_24.bin";
+  string file4 = "../data/EMvsMCS_unordered_24.bin";
 
 
   solveForDifferentMCS(1, true, file1);
   solveForDifferentMCS(1, false, file2);
   solveForDifferentMCS(2.4, true, file3);
   solveForDifferentMCS(2.4, false, file4);
-  */
+
 
   string file5 = "../data/probability1.dat";
   string file6 = "../data/probability24.dat";
 
-  calculateProbability(1, file5);
+  //calculateProbability(1, file5);
   //calculateProbability(2.4, file6);
 
   return 0;
@@ -50,18 +50,21 @@ void writeToFile(double *values, double T, int mcs, int count){
 
 void solveForDifferentMCS(double T, bool ordered, string filename){
   int L = 20; double p[1000];
-  ofile.open(filename);
 
   double J = 1; double k = 1; double beta = 1/(k*T);
   double values[5]; long idum = -1; int count;
 
-  for (int mcs = 1e0; mcs <= 1e6; mcs*=10){
+  ofstream file(filename, ofstream::binary);
+  for (int mcs = 100; mcs <= 1e5; mcs+=100){
     solveGivenT(L, mcs, T, k, J, values, idum, ordered, count,p);
     calculateVarNormalize(values, L, mcs);
     calculateCChi(values, k, T);
-    writeToFile(values, T, mcs, count);
+    file.write(reinterpret_cast<const char*>(&mcs), sizeof(int));
+    file.write(reinterpret_cast<const char*>(&T), sizeof(double));
+    file.write(reinterpret_cast<const char*>(values), 5*sizeof(double));
+    file.write(reinterpret_cast<const char*>(&count), sizeof(int));
   }
-  ofile.close();
+  file.close();
 }
 
 void calculateProbability(double T, string filename){
