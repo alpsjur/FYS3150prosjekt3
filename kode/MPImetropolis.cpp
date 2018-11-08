@@ -10,6 +10,8 @@ Project-path username$ mpirun -n 2 ./MPImetropolis.exe filnavn
 
 ofstream ofile;
 void writeToFile(double *values, double T);
+void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
+                 long &idum, bool ordered);
 
 int main(int argc, char* argv[]){
   int L = 2;
@@ -57,7 +59,7 @@ int main(int argc, char* argv[]){
   TimeStart = MPI_Wtime();
   for ( double T = initialT; T <= finalT; T += dT){
     int count = 0;
-    solveGivenT(L, my_mcs, T, k, J, values, idum, ordered, count, p);
+    solveGivenT(L, my_mcs, T, k, J, values, idum, ordered);
 
     // finner totalt gjennomsnitt
     for( int i =0; i < 5; i++){
@@ -85,6 +87,49 @@ int main(int argc, char* argv[]){
   MPI_Finalize ();
 
   return 0;
+}
+
+void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
+                 long &idum, bool ordered){
+  double beta = 1/(k*T);
+  double w[17];
+  imat spinMatrix;
+  double nSpins = L*L;
+  int sumP = 0;
+  int deltaE;
+  //regner ut mulige w-verdier
+  for (int i=0; i<5; ++i){
+    w[i*4] = exp(-beta*J*(i*4-8));
+  }
+  double E = 0; double M = 0;
+  initialize(L, spinMatrix, values, E, M, J, ordered);
+  //går gjennom gitt antall monte carlo sykluser (mcs)
+  for (int i = 0; i < mcs; ++i){
+    //går gjennom alle spinnene
+    for (int j=0; j < nSpins; ++j){
+      //velger et tilfeldig spinn
+      int k = (int) (ran2(&idum)*(double)L);
+      int l = (int) (ran2(&idum)*(double)L);
+      //beregner endring i energi
+      deltaE = (spinMatrix(k,periodic(l+1,L))+
+                spinMatrix(k,periodic(l-1,L))+
+                spinMatrix(periodic(k+1,L),l)+
+                spinMatrix(periodic(k-1,L),l))*
+                spinMatrix(k,l)*2;
+      //Utfører metropolis-testen
+      if (ran2(&idum) <= w[deltaE+8]){
+        spinMatrix(k,l) *= -1;
+        E += (double) deltaE*J;
+        M += (double) 2*spinMatrix(k,l);
+      }
+    }
+    //metropolis(L, spinMatrix, idum, E, M, w, J, count, p, i);
+    values[0] += E;
+    values[1] += E*E;
+    values[2] += fabs(M);
+    values[3] += M*M;
+    values[4] += M;
+  }
 }
 
 

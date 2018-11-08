@@ -30,13 +30,13 @@ TEST_CASE("Tester om vi faar riktige forventningsverdier når L=2"){
     EE += energy[i]*energy[i]*p;
     MM += magnetization[i]*magnetization[i]*p;
   }
-  analyticalE /= Z; analyticalM /= Z;
+  analyticalE /= Z; analyticalM /= Z; analyticalAbsM /= Z;
   EE /= Z; MM = MM /= Z;
   double analyticalC = (EE-analyticalE*analyticalE)/(k*T*T*nSpins);
-  double analyticalChi = (MM-analyticalM*analyticalM)/(k*T*nSpins);
+  double analyticalChi = (MM-analyticalAbsM*analyticalAbsM)/(k*T*nSpins);
   analyticalE /= nSpins;
   analyticalM /= nSpins;
-  analyticalAbsM /= nSpins*Z;
+  analyticalAbsM /= nSpins;
 
   //cout << analyticalE << " " << analyticalC << " " << analyticalM << " " << analyticalChi << endl;
   REQUIRE(fabs(values[0]/analyticalE) == Approx(1).epsilon(0.001));

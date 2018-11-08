@@ -104,7 +104,7 @@ void calculateVarNormalize(double *values, int L, int mcs){
     values[i] /= (double) mcs;    //beregner gjennomsnittet av alle mc-syklusene
   }
   values[1] = (values[1]-values[0]*values[0])/(nSpins);      //beregner variansen til E per spinn
-  values[3] = (values[3]-values[4]*values[4])/(nSpins);      //beregner variansen til M per spinn
+  values[3] = (values[3]-values[2]*values[2])/(nSpins);      //beregner variansen til M per spinn
   values[0] /= nSpins; values[2] /= nSpins; values[4] /= nSpins;   //forventning per spinn
 }
 
