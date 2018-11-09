@@ -12,23 +12,24 @@ Project-path username$ mpirun -n 2 ./MPImetropolis.exe filnavn
 //ofstream ofile;
 void writeToFile(double *values, double T);
 void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
-                 long &idum, bool ordered);
+                 long &idum, int, bool ordered);
 
 int main(int argc, char* argv[]){
-  int L = 40;
-  int mcs = 1e5;
+  int L = atoi(argv[2]);
+  int mcs = 1e6;
   double J = 1;
   double k = 1;
-  double initialT = 2;
+  double initialT = 2.0;
   double finalT = 2.3;
-  double dT = 0.05;
-  bool ordered = true;
+  double dT = 0.01;
+  bool ordered = false;
+  int stabilizedMCS = 25e3;
 
 
   char *outfilename;
   long idum;
   int my_rank, numprocs;
-  double values[5], collectedValues[5], E, M;
+  double values[5], collectedValues[5];
 
   //  MPI initsialisering
   MPI_Init (&argc, &argv);
@@ -38,7 +39,6 @@ int main(int argc, char* argv[]){
   ofstream ofile;
   if (my_rank == 0) {
     outfilename = argv[1];
-    //ofile.open(outfilename);
     ofile.open(outfilename, ofstream::binary);
   }
 
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]){
   TimeStart = MPI_Wtime();
   for ( double T = initialT; T <= finalT; T += dT){
     int count = 0;
-    solveGivenT(L, my_mcs, T, k, J, values, idum, ordered);
+    solveGivenT(L, my_mcs, T, k, J, values, idum, stabilizedMCS, ordered);
 
     // finner totalt gjennomsnitt
     for( int i =0; i < 5; i++){
@@ -70,9 +70,8 @@ int main(int argc, char* argv[]){
 
     // printer resultat
     if ( my_rank == 0) {
-      calculateVarNormalize(collectedValues, L, mcs);
+      calculateVarNormalize(collectedValues, L, mcs, stabilizedMCS,numprocs);
       calculateCChi(collectedValues, k, T);
-      //writeToFile(collectedValues, T);
       ofile.write(reinterpret_cast<const char*>(&T), sizeof(double));
       ofile.write(reinterpret_cast<const char*>(collectedValues), 5*sizeof(double));
     }
@@ -88,18 +87,16 @@ int main(int argc, char* argv[]){
 
   // End MPI
   MPI_Finalize ();
-
   return 0;
 }
 
 void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
-                 long &idum, bool ordered){
+                 long &idum, int stabilizedMCS, bool ordered){
   double beta = 1/(k*T);
   double w[17];
   imat spinMatrix;
   double nSpins = L*L;
-  int sumP = 0;
-  int deltaE;
+  int deltaE, sumP = 0;
   //regner ut mulige w-verdier
   for (int i=0; i<5; ++i){
     w[i*4] = exp(-beta*J*(i*4-8));
@@ -111,38 +108,27 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
     //går gjennom alle spinnene
     for (int j=0; j < nSpins; ++j){
       //velger et tilfeldig spinn
-      int k = (int) (ran2(&idum)*(double)L);
       int l = (int) (ran2(&idum)*(double)L);
+      int m = (int) (ran2(&idum)*(double)L);
       //beregner endring i energi
-      deltaE = (spinMatrix(k,periodic(l+1,L))+
-                spinMatrix(k,periodic(l-1,L))+
-                spinMatrix(periodic(k+1,L),l)+
-                spinMatrix(periodic(k-1,L),l))*
-                spinMatrix(k,l)*2;
+      deltaE = (spinMatrix(l,periodic(m+1,L))+
+                spinMatrix(l,periodic(m-1,L))+
+                spinMatrix(periodic(l+1,L),m)+
+                spinMatrix(periodic(l-1,L),m))*
+                spinMatrix(l,m)*2;
       //Utfører metropolis-testen
       if (ran2(&idum) <= w[deltaE+8]){
-        spinMatrix(k,l) *= -1;
+        spinMatrix(l,m) *= -1;
         E += (double) deltaE*J;
-        M += (double) 2*spinMatrix(k,l);
+        M += (double) 2*spinMatrix(l,m);
       }
     }
-    //metropolis(L, spinMatrix, idum, E, M, w, J, count, p, i);
-    values[0] += E;
-    values[1] += E*E;
-    values[2] += fabs(M);
-    values[3] += M*M;
-    values[4] += M;
+    if (i > stabilizedMCS){
+      values[0] += (double) E;
+      values[1] += (double) E*E;
+      values[2] += (double) fabs(M);
+      values[3] += (double) M*M;
+      values[4] += (double) M;
+    }
   }
 }
-
-/*
-void writeToFile(double *values, double T){
-  ofile << setiosflags(ios::showpoint | ios::uppercase);
-  ofile << setw(15) << setprecision(8) << T;
-  ofile << setw(15) << setprecision(8) << values[0];
-  ofile << setw(15) << setprecision(8) << values[1];
-  ofile << setw(15) << setprecision(8) << values[2];
-  ofile << setw(15) << setprecision(8) << values[3];
-  ofile << setw(15) << setprecision(8) << values[4] << endl;
-}
-*/

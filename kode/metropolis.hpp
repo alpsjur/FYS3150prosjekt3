@@ -24,16 +24,13 @@ double calculateTotalEnergy(int, imat, double);
 void initialize(int L, imat &spinMatrix, double *values,double &E, double &M, double J, bool);
 
 //finner forventningsverdier gitt temperatur ved MonteCarlo-metoden
-void solveGivenT(int, int, double, double, double, double *, long &, bool, int&, double *);
+void solveGivenT(int, int, double, double, double, double *, long &, int, bool, int&, double *);
 
 //bergener variansen til E og M, og nrmaliserer med hensyn på antall monte carlo-sykluser og antall spinn
-void calculateVarNormalize(double *values, int L, int mcs);
+void calculateVarNormalize(double *values, int L, int mcs, int stabilizedMCS, int numprocs);
 
 //funnksjon som beregner varmekapasiteten og susceptibiliteten
 void calculateCChi(double *values, double k, double T);
-
-//skriver beregnede verdier til fil
-void writeToFile(ofstream ofile,double *values, double T, int mcs);
 
 //parallelisert løsning for flere T-verdier
 void MPIsolve(int argc, char* argv[], string outfilename, int L, int mcs,

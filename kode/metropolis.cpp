@@ -1,13 +1,12 @@
 #include "metropolis.hpp"
 
 void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
-                 long &idum, bool ordered, int &count, double *p){
+                 long &idum, int stabilizedMCS, bool ordered, int &count, double *p){
   double beta = 1/(k*T);
   double w[17];
   imat spinMatrix;
   double nSpins = L*L;
-  int sumP = 0;
-  int deltaE;
+  int deltaE, sumP = 0;
   //regner ut mulige w-verdier
   for (int i=0; i<5; ++i){
     w[i*4] = exp(-beta*J*(i*4-8));
@@ -19,34 +18,36 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
     //går gjennom alle spinnene
     for (int j=0; j < nSpins; ++j){
       //velger et tilfeldig spinn
-      int k = (int) (ran2(&idum)*(double)L);
       int l = (int) (ran2(&idum)*(double)L);
+      int m = (int) (ran2(&idum)*(double)L);
       //beregner endring i energi
-      deltaE = (spinMatrix(k,periodic(l+1,L))+
-                spinMatrix(k,periodic(l-1,L))+
-                spinMatrix(periodic(k+1,L),l)+
-                spinMatrix(periodic(k-1,L),l))*
-                spinMatrix(k,l)*2;
+      deltaE = (spinMatrix(l,periodic(m+1,L))+
+                spinMatrix(l,periodic(m-1,L))+
+                spinMatrix(periodic(l+1,L),m)+
+                spinMatrix(periodic(l-1,L),m))*
+                spinMatrix(l,m)*2;
       //Utfører metropolis-testen
       if (ran2(&idum) <= w[deltaE+8]){
-        spinMatrix(k,l) *= -1;
+        spinMatrix(l,m) *= -1;
         E += (double) deltaE*J;
-        M += (double) 2*spinMatrix(k,l);
+        M += (double) 2*spinMatrix(l,m);
         //teller antall ganger ny tilstand aksepteres
         count++;
-        //beregner sannsynliget for energitilstandene
-        if (i > 1e5){
+        if (i > stabilizedMCS){
+          //beregner sannsynliget for energitilstandene
           p[(int)-E]++;
-          sumP++;
+          sumP ++;
         }
+
       }
     }
-    //metropolis(L, spinMatrix, idum, E, M, w, J, count, p, i);
-    values[0] += E;
-    values[1] += E*E;
-    values[2] += fabs(M);
-    values[3] += M*M;
-    values[4] += M;
+    if (i > stabilizedMCS){
+      values[0] += (double) E;
+      values[1] += (double) E*E;
+      values[2] += (double) fabs(M);
+      values[3] += (double) M*M;
+      values[4] += (double) M;
+    }
   }
   for (int i = 0; i < 1000; i++){
     p[i] /= sumP;
@@ -98,34 +99,23 @@ double calculateTotalEnergy(int L, imat spinMatrix, double J){
   return E;
 }
 
-void calculateVarNormalize(double *values, int L, int mcs){
-  int nSpins = L*L;
-  for (int i = 0; i <= 4; ++i){
-    values[i] /= (double) mcs;    //beregner gjennomsnittet av alle mc-syklusene
+void calculateVarNormalize(double *values, int L, int mcs, int stabilizedMCS, int numprocs){
+  double nSpins = L*L;
+  for (int i = 0; i < 5; ++i){
+    values[i] /= (double) (mcs-stabilizedMCS*numprocs);    //beregner gjennomsnittet av samplesene
   }
-  values[1] = (values[1]-values[0]*values[0])/(nSpins);      //beregner variansen til E per spinn
-  values[3] = (values[3]-values[2]*values[2])/(nSpins);      //beregner variansen til M per spinn
+  values[1] = (values[1]-values[0]*values[0])/nSpins;              //beregner variansen til E per spinn
+  values[3] = (values[3]-values[2]*values[2])/nSpins;              //beregner variansen til M per spinn
   values[0] /= nSpins; values[2] /= nSpins; values[4] /= nSpins;   //forventning per spinn
 }
 
 void calculateCChi(double *values, double k, double T){
-  values[1] /= k*T*T;
-  values[3] /= k*T;
-}
-
-void writeToFile(ofstream ofile, double *values, double T, int mcs){
-  ofile << setiosflags(ios::showpoint | ios::uppercase);
-  ofile << setw(15) << setprecision(8) << mcs;
-  ofile << setw(15) << setprecision(8) << T;
-  ofile << setw(15) << setprecision(8) << values[0];
-  ofile << setw(15) << setprecision(8) << values[1];
-  ofile << setw(15) << setprecision(8) << values[2];
-  ofile << setw(15) << setprecision(8) << values[3];
-  ofile << setw(15) << setprecision(8) << values[4] << endl;
+  values[1] /= (double)k*T*T;                                     //beregner varmekapasiteten
+  values[3] /= (double)k*T;                                       //beregner susceptibility
 }
 
 
-// tilfeldig-tall-generator kopiert fra Morten sin kode
+//RNG kopiert fra morten sin kode
 /*
 ** The function
 **         ran2()
