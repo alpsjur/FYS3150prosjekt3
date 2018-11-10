@@ -4,9 +4,16 @@ import seaborn as sns
 
 def plotVarT(ax, path, filename, nVar):
     data = np.fromfile(path+filename)
+    if filename == "metropolis80_1.bin":
+        data2 = np.fromfile(path+"metropolis80_2.bin")
+        data = np.concatenate((data, data2), axis=None)
+    if filename == "metropolis100_1.bin":
+        data2 = np.fromfile(path+"metropolis100_2.bin")
+        data3 = np.fromfile(path+"metropolis100_3.bin")
+        data = np.concatenate((data, data2, data3), axis=None)
     T = data[0::6]; var = data[nVar::6];
     #print(var)
-    ax.plot(T, var)
+    ax.plot(T, var, marker='.')
 
 path = "../data/"
 figdir = "../figurer/"
@@ -17,9 +24,9 @@ plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
 
 
-files = ["metropolis40.bin", "metropolis60.bin", "metropolis80.bin", "metropolis100.bin"]
+files = ["metropolis40.bin", "metropolis60.bin", "metropolis80_1.bin", "metropolis100_1.bin"]
 variables = [r"$\left\langle E\right\rangle$",r"$C_V$",r"$\left\langle M\right\rangle$",r"$\chi$"]
-legends = ["L=40","L=60"]
+legends = ["L=40","L=60", "L=80", "L=100"]
 names=["energy.pdf","heat_capacity.pdf","magnetization.pdf","susceptibility.pdf"]
 
 for i in [1,2,3,4]:

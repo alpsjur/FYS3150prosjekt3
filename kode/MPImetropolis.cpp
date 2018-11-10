@@ -19,9 +19,9 @@ int main(int argc, char* argv[]){
   int mcs = 1e6;
   double J = 1;
   double k = 1;
-  double initialT = 2.0;
-  double finalT = 2.3;
-  double dT = 0.01;
+  double initialT = 2.20;
+  double finalT = 2.30;
+  double dT = 0.005;
   bool ordered = false;
   int stabilizedMCS = 25e3;
 
@@ -74,6 +74,7 @@ int main(int argc, char* argv[]){
       calculateCChi(collectedValues, k, T);
       ofile.write(reinterpret_cast<const char*>(&T), sizeof(double));
       ofile.write(reinterpret_cast<const char*>(collectedValues), 5*sizeof(double));
+      cout << "Ferdig med temperatur " << T << endl;
     }
   }
 

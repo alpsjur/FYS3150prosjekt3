@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.24)  9 NOV 2018 13:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.24)  9 NOV 2018 23:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1719,11 +1719,12 @@ No file main.bbl.
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
- <../figurer/EMvsMCS.pdf> <../figurer/nAccepted.pdf
+ <../figurer/EMvsMCS.pdf>] [2 <../figurer/nAccepted.pdf> <../figurer/probabilit
+y.pdf
 
-pdfTeX warning: /usr/bin/pdflatex (file ../figurer/nAccepted.pdf): PDF inclusio
-n: multiple pdfs with page group included in a single page
->] [2 <../figurer/probability.pdf> <../figurer/energy.pdf
+pdfTeX warning: /usr/bin/pdflatex (file ../figurer/probability.pdf): PDF inclus
+ion: multiple pdfs with page group included in a single page
+> <../figurer/energy.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ../figurer/energy.pdf): PDF inclusion: 
 multiple pdfs with page group included in a single page
@@ -1731,45 +1732,44 @@ multiple pdfs with page group included in a single page
 
 pdfTeX warning: /usr/bin/pdflatex (file ../figurer/heat_capacity.pdf): PDF incl
 usion: multiple pdfs with page group included in a single page
-> <../figurer/magnetization.pdf
-
-pdfTeX warning: /usr/bin/pdflatex (file ../figurer/magnetization.pdf): PDF incl
-usion: multiple pdfs with page group included in a single page
 >] [3
 
- <../figurer/susceptibility.pdf>]
+ <../figurer/magnetization.pdf> <../figurer/susceptibility.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ../figurer/susceptibility.pdf): PDF inc
+lusion: multiple pdfs with page group included in a single page
+>]
 \openout2 = `appendix.aux'.
 
  (./appendix.tex) [4
 
 
-] (./main.aux
-(./appendix.aux)) ) 
+] (./main.aux (./appendix.aux)) ) 
 Here is how much of TeX's memory you used:
  11469 strings out of 493029
  201540 string characters out of 6136234
- 255895 words of memory out of 5000000
+ 253895 words of memory out of 5000000
  14883 multiletter control sequences out of 15000+600000
  9709 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,9n,42p,10407b,275s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
-12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.
-pfb>
-Output written on main.pdf (4 pages, 324166 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmsy8.pfb>
+Output written on main.pdf (4 pages, 334640 bytes).
 PDF statistics:
- 199 PDF objects out of 1000 (max. 8388607)
+ 211 PDF objects out of 1000 (max. 8388607)
  156 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
