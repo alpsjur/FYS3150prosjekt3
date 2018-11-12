@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
   double k = 1;
   double initialT = 2.20;
   double finalT = 2.30;
-  double dT = 0.005;
+  double dT = 0.001;
   bool ordered = false;
   int stabilizedMCS = 25e3;
 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]){
   ofstream ofile;
   if (my_rank == 0) {
     outfilename = argv[1];
-    ofile.open(outfilename, ofstream::binary);
+    ofile.open(outfilename, ofstream::app);
   }
 
 
@@ -72,8 +72,14 @@ int main(int argc, char* argv[]){
     if ( my_rank == 0) {
       calculateVarNormalize(collectedValues, L, mcs, stabilizedMCS,numprocs);
       calculateCChi(collectedValues, k, T);
-      ofile.write(reinterpret_cast<const char*>(&T), sizeof(double));
-      ofile.write(reinterpret_cast<const char*>(collectedValues), 5*sizeof(double));
+      //ofile.write(reinterpret_cast<const char*>(&T), sizeof(double));
+      //ofile.write(reinterpret_cast<const char*>(collectedValues), 5*sizeof(double));
+      ofile << setw(15) << setprecision(8) << T;
+      ofile << setw(15) << setprecision(8) << collectedValues[0];
+      ofile << setw(15) << setprecision(8) << collectedValues[1];
+      ofile << setw(15) << setprecision(8) << collectedValues[2];
+      ofile << setw(15) << setprecision(8) << collectedValues[3];
+      ofile << setw(15) << setprecision(8) << collectedValues[4] << endl;
       cout << "Ferdig med temperatur " << T << endl;
     }
   }
