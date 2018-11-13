@@ -3,7 +3,7 @@
 
 \subsection{Thermodynamic properties}
 In this report I will study different thermodynamic properties of a Canonical Ensemble in the form of a spin lattice. The probability distribution in such a system is given by the Boltzmann distribution,  
-\begin{equation}
+\begin{equation}\label{eq:prob}
 	P_i(\beta) =  \frac{e^{-\beta E_i}}{Z},
 \end{equation}
 where $\beta = \frac{1}{k_B T}$, $k_B$ is the Boltzmann constant, and $E_i$ is the energy in a given microstate. $Z$ is the partition function given by 
@@ -33,7 +33,7 @@ where $J$ is a coupling constant expressing the strength of the interaction betw
 \begin{equation}
 M = \sum_i s_i.
 \end{equation}
-For smaller systems, it is possibly to calculate the expectation values analytically by finding and counting all the possible states. The different states for a $2\times 2$ lattice is listed in Table \ref{tab:L2 values}, and will be used together with equation (\ref{eq:expect}) and to test if the algorithm reaches the expectation values.
+For smaller systems, it is possibly to calculate the expectation values analytically by finding and counting all the possible states. The different states for a $2\times 2$ lattice are listed in Table \ref{tab:L2 values}, and will be used together with equation (\ref{eq:expect}) and (\ref{eq:prob}) to test if the algorithm reaches the expectation values.
 \begin{table}[htbp]
 	\centering
 	\begin{tabular}{rrrr}
@@ -51,7 +51,18 @@ For smaller systems, it is possibly to calculate the expectation values analytic
 	\label{tab:L2 values}
 \end{table}
 
-\subsection{Metropolis' algorithm}
+FLAGG boundary conditions FLAGG 
+
+\subsubsection{Phase transitions and critical temperature in the Ising model}
+\begin{equation}
+T_C(L) - T_C(L=\infty) = aL^{-1/\nu}
+\end{equation}
+
+\begin{equation}
+T_C(L=\infty) = \frac{T_C(L_i)L_i-T_C(L_j)L_j}{L_i-L_j}
+\end{equation}
+
+\subsubsection{Metropolis' algorithm}
 One possibly way of solving the Ising model is by using the so called Metropolis' algorithm. The key concept in this algorithm is to generates steps in a Marcov chain, with a method for rejecting new steps. The Markov chain will eventually reach the most likely state. Algorithm \ref{alg:met} shows Metropolis' algorithm adapted for Ising's model, and is based on the algorithm found in \cite{lecturenotes}. For each spin in the lattice, a random spin is flipped. The energy difference is then computed, and the transition probability $w$ is computed as
 \begin{equation}
 w=e^{- \beta \Delta E }.
@@ -90,6 +101,13 @@ is compared with a number $r$ given by a random number generator (RNG) with an u
 	\BlankLine
 \end{algorithm}
 
-\subsection{Probability distribution}
+\subsubsection{Probability distribution of the energies}
+One of the properties of the Ising model addressed in this report is the probability distribution of the energy states $p(E)$. In order to determine the distribution, the number of times each energy appears after the termalization time is counted, and then divided by the total number of samples. This is done for temperatures 1.0 $k_BT/J$ and 2.4 $k_BT/J$. This is compared with the variance of the energy, given as
+\begin{equation}
+ \sigma_E^2 = \left\langle E^2\right\rangle - \left\langle E\right\rangle^2 .
+\end{equation}  
+ 
+\subsection{Implementation}
+Algorithm \ref{alg:met} can be calculation-heavy when using a large number of Monte Carlo cycles. In order to get a more efficient code, the calculations are parallelised. This is done using MPI. Each CPU is assigned only a fraction of the total number of $mcs$, and then all the  expectation values are collected and the mean is calculated. 
 
-\subsection{Programming technicalities}
+All programs are written in C++, using python3.6 to produce figures and tables.   
