@@ -84,7 +84,7 @@ for i in [2]:
                     Line2D([0], [0], color=colors[2]),
                     Line2D([0], [0], color=colors[3])]
     ax.legend(custom_lines,legends,loc='upper center', bbox_to_anchor=(0.5, 1.18),fontsize=14, frameon=False, ncol=2)
-    plt.savefig(figdir+"zoom.pdf")
+    #plt.savefig(figdir+"zoom.pdf")
 
 Tc, std = findTcInf(path, files)
 print("Forventningsverdi Tc: ", Tc, "Standardavvik: ", std)

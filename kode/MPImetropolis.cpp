@@ -9,8 +9,6 @@ Project-path username$ mpirun -n 2 ./MPImetropolis.exe filnavn L
 #include "mpi.h"
 
 
-//ofstream ofile;
-void writeToFile(double *values, double T);
 void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
                  long &idum, int, bool ordered);
 
@@ -60,7 +58,6 @@ int main(int argc, char* argv[]){
   double  TimeStart, TimeEnd, TotalTime;
   TimeStart = MPI_Wtime();
   for ( double T = initialT; T <= finalT; T += dT){
-    int count = 0;
     solveGivenT(L, my_mcs, T, k, J, values, idum, stabilizedMCS, ordered);
 
     // finner totalt gjennomsnitt

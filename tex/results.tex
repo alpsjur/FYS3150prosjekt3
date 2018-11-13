@@ -1,27 +1,26 @@
 \section{Results}
 \label{sec:results}
-Figure \ref{fig:EMvsMCS} shows the expectation values for the energy and absolute magnetisation as a function of Monte Carlo sweeps with both an ordered and unordered initial configuration. Results for a low temperature 1.0 and a higher temperature 2.4, which is above the critical temperature, are shown. One can see that the expectation values stabilizes almost immediately when an ordered starting configuration is chosen for the lower temperature. But when an unordered configuration is chosen, the values does not stabilize until about $25000$ $mcs$. As for the higher temperature, both an ordered and unordered initial configuration gives a result that stabilizes quite fast, with some fluctuations, around a value. This happens after about 5000 $mcs$ for the energy, and after about 10000 $mcs$ for the magnetisation.   
+Figure \ref{fig:EMvsMCS} shows the expectation values for the energy and absolute magnetisation as a function of Monte Carlo sweeps with both an ordered and unordered initial configuration. Results for a low temperature 1.0 and a higher temperature 2.4, which is above the critical temperature, are shown. One can see that the expectation values stabilises almost immediately when an ordered starting configuration is chosen for the lower temperature. But when an unordered configuration is chosen, the values does not stabilise until about $25000$ $mcs$. As for the higher temperature, both an ordered and unordered initial configuration gives a result that stabilises quite fast around a value, with some fluctuations. This happens after about 5000 $mcs$ for the energy, and after about 10000 $mcs$ for the magnetisation.   
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{EMvsMCS.pdf}
 	\caption{Plot over expectation values for energy $E$ per spin and absolute magnetisation $|M|$ per spin as a functions of Monte Carlo sweeps $mcs$. The expectation values are plotted for $T=1.0$ and $T=2.4$ with both an ordered and unordered initial state.}
 	\label{fig:EMvsMCS}
 \end{figure}
-
+In Figure \ref{fig:nAccepted}, the number of accepted configurations as a function of Monte Carlo cycles is shown. Again this is plotted for temperatures 1.0 and 2.4, with both an unordered and ordered initial configuration. FLAGG uteseende på grafene FLAGG
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{nAccepted.pdf}
 	\caption{Plot over the number of accepted configurations as a function of Monte Carlo sweeps $mcs$. The number of accepted configurations are plotted for $T=1.0$ and $T=2.4$ with both an ordered and unordered initial state. The scale is logarithmic.}
 	\label{fig:nAccepted}
 \end{figure}
-
+The probability distribution of $E$ per spin is shown in Figure \ref{fig:prob}. For the temperature 1.0 the possible states are all close to -2.0, with two states highly more probable than the others. For the temperature 2.4, the distribution is closer to a normal distribution, with the most probable states around -1.2. The expectation value and variance of $E$ for the same temperatures are shown in Table \ref{tab:prob}.
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{probability.pdf}
-	\caption{Plot over probabilities for a given energy $E$ per spin. The top plot is for temperature $T = 1.0$ while the bottom plot is for temperature $T=2.4$.}
+	\caption{Plot over probabilities for a given energy $E$ per spin. The top plot is for temperature $T = 1.0$ while the bottom plot is for temperature $T=2.4$. $10^6$ $mcs$ were used.}
 	\label{fig:prob}
 \end{figure}
-
 \begin{table}[htbp]
 	\centering
 	\begin{tabular}{lll}
@@ -66,7 +65,7 @@ Figure \ref{fig:EMvsMCS} shows the expectation values for the energy and absolut
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{zoom.pdf}
-	\caption{Plot over the expectation values for the specific heat per spin $C_V$ as a function of temperature $T$ with step size $10^{-4}$.The results are from lattices with size $L=40,60,80$ and 100. $10^6$ $mcs$ were used for each step. The dots are the collected data, while the solid line is a running mean with a window size of 9.}
+	\caption{Plot over the expectation values for the specific heat per spin $C_V$ as a function of temperature $T$ with step size $10^{-4}$.The results are from lattices with size $L=40,60,80$ and 100. $10^6$ $mcs$ were used for each step. The dots are the collected data, while the solid line is a running mean with a window size of 11.}
 	\label{fig:zoom}
 \end{figure}
 
