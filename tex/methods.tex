@@ -1,11 +1,31 @@
 \section{Methods}
 \label{sec:methods}
 
-\subsection{Statistical physics and thermodynamics}
-
-
+\subsection{Thermodynamic properties}
+In this report I will study different thermodynamic properties of a Canonical Ensemble in the form of a spin lattice. The probability distribution in such a system is given by the Boltzmann distribution,  
+\begin{equation}
+	P_i(\beta) =  \frac{e^{-\beta E_i}}{Z},
+\end{equation}
+where $\beta = \frac{1}{k_B T}$, $k_B$ is the Boltzmann constant, and $E_i$ is the energy in a given microstate. $Z$ is the partition function given by 
+\begin{equation}
+ Z = \sum_{i}  e^{-\beta E_i}.
+\end{equation}
+ The expectation value to a given variable $A$ is given by 
+ \begin{equation}\label{eq:expect}
+  \left\langle A\right\rangle = \frac{1}{Z}\sum_{i=1}^{N} D_i A_i  e^{- \beta E_i} 
+ \end{equation}   
+ where $A_i$ is the value of the variable in question for the state $i$. Equation (\ref{eq:expect}) gives a method for finding the expectation value of the energy $E$ and mean magnetization $|M|$. Further, the specific heat at a constant volume $C_V$ can be expressed as  
+ \begin{equation}
+	 C_V = \frac{\left\langle E^2\right\rangle - \left\langle E\right\rangle ^2}{k_BT^2},
+ \end{equation}
+ while the susceptibility $\chi$ is given by 
+  \begin{equation}
+  \chi = \frac{\left\langle |M|^2\right\rangle - \left\langle |M|\right\rangle ^2}{k_BT}.
+  \end{equation}
+ For a derivation of these expressions, see for example \cite{schroeder}.
+ 
 \subsection{The Ising model}
-The Ising model consists of variables $s$ that can exist in two states, typically +1 or -1. These variables represent magnetic dipole moments of atomic spin, and are ordered in a two dimensional lattice consisting of $L\times L$ spins. Given that there is no magnetic field, the energy of the system is modelled as
+The Ising model consists of variables $s$ that can exist in two states, typically +1 or -1. These variables represent magnetic dipole moments of atomic spin, and are ordered in a two dimensional lattice consisting of $L\times L$ spins. Given that there is no external magnetic field, the energy of the system is modelled as
 \begin{equation}
 E = -J\sum_{\left\langle ij\right\rangle } s_is_j,
 \end{equation} 
@@ -13,9 +33,63 @@ where $J$ is a coupling constant expressing the strength of the interaction betw
 \begin{equation}
 M = \sum_i s_i.
 \end{equation}
-
-\subsection{Monte Carlo simulations}
+For smaller systems, it is possibly to calculate the expectation values analytically by finding and counting all the possible states. The different states for a $2\times 2$ lattice is listed in Table \ref{tab:L2 values}, and will be used together with equation (\ref{eq:expect}) and to test if the algorithm reaches the expectation values.
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{rrrr}
+		\# spins up & D & E & M \\
+		\hline
+		\addlinespace[0.1cm]
+		4                   & 1          & -8J    & 4             \\
+		3                   & 4          & 0      & 2             \\
+		2                   & 4          & 0      & 0             \\
+		2                   & 2          & 8J     & 0             \\
+		1                   & 4          & 0      & -2            \\
+		0                   & 1          & -8J    & -4           
+	\end{tabular}
+	\caption{The different states according to their energy and magnetization for a $2\times 2$ lattice.}
+	\label{tab:L2 values}
+\end{table}
 
 \subsection{Metropolis' algorithm}
-One possibly way of solving the Ising model is by using the so called Metropolis' algorithm. 
+One possibly way of solving the Ising model is by using the so called Metropolis' algorithm. The key concept in this algorithm is to generates steps in a Marcov chain, with a method for rejecting new steps. The Markov chain will eventually reach the most likely state. Algorithm \ref{alg:met} shows Metropolis' algorithm adapted for Ising's model, and is based on the algorithm found in \cite{lecturenotes}. For each spin in the lattice, a random spin is flipped. The energy difference is then computed, and the transition probability $w$ is computed as
+\begin{equation}
+w=e^{- \beta \Delta E }.
+\end{equation}
+In order to determine if the new state is accepted, the transition probability
+is compared with a number $r$ given by a random number generator (RNG) with an uniform probability distribution. If $w \geq r$, the new state is accepted. The new state is also accepted if the new state has a lower energy. Each sweep over the lattice is called a Monte Carlo cycle (mcs). After a given number of mcs, the expectation values of the system will have reached equilibrium and the most likely configuration is reached. There can still be variations in $E$ an $|M|$, but they will fluctuate around a given value. This is called the thermalisation time. In order to get good estimates for the expectation values, the sampling should start after the thermalization time is reached. 
 
+
+\begin{algorithm}[htbp]\label{alg:met}\caption{Metropolis' algorithm for solving The Ising model.}
+	\SetAlgoLined
+	\BlankLine
+	\BlankLine
+	Initzialise a state with energy $E$\;
+	\For{$i=1,\ldots,mcs$}{
+		\ForEach{s}{
+			Flipp random spin\;
+			Calculate $\Delta E$\;
+			\If{$\Delta E \leq 0$}{
+				Accept new state\;	
+			}
+			\Else{
+				Calculate transition probability $w$\;
+				Generate random number $r \in \left[ 0,1\right] $\;	
+				\If{$r \leq w$}{
+					Accept new state\;	
+				}
+				\Else{
+					Keep old state\;	
+				}
+			}
+		}
+	Update expectation values\;
+	}
+	Calculate mean expectation values\;	
+	\BlankLine
+	\BlankLine
+\end{algorithm}
+
+\subsection{Probability distribution}
+
+\subsection{Programming technicalities}
