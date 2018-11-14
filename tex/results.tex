@@ -4,21 +4,23 @@ Figure \ref{fig:EMvsMCS} shows the expectation values for the energy and absolut
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{EMvsMCS.pdf}
-	\caption{Plot over expectation values for energy $E$ per spin and absolute magnetisation $|M|$ per spin as a functions of Monte Carlo sweeps $mcs$. The expectation values are plotted for $T=1.0$ and $T=2.4$ with both an ordered and unordered initial state.}
+	\caption{Plot over expectation values for energy $E$ per spin and absolute magnetisation $|M|$ per spin as a functions of Monte Carlo sweeps $mcs$. The expectation values are plotted for $T=1.0$ and $T=2.4$ with both an ordered and unordered initial state. Lattice size $L=20$ was used.}
 	\label{fig:EMvsMCS}
 \end{figure}
+
 In Figure \ref{fig:nAccepted}, the number of accepted configurations as a function of Monte Carlo cycles is shown. Again this is plotted for temperatures 1.0 and 2.4, with both an unordered and ordered initial configuration. FLAGG uteseende på grafene FLAGG
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{nAccepted.pdf}
-	\caption{Plot over the number of accepted configurations as a function of Monte Carlo sweeps $mcs$. The number of accepted configurations are plotted for $T=1.0$ and $T=2.4$ with both an ordered and unordered initial state. The scale is logarithmic.}
+	\caption{Plot over the number of accepted configurations as a function of Monte Carlo sweeps $mcs$. The number of accepted configurations are plotted for $T=1.0$ and $T=2.4$ with both an ordered and unordered initial state. Lattice size $L=20$ was used. The scale is logarithmic.}
 	\label{fig:nAccepted}
 \end{figure}
+
 The probability distribution of $E$ per spin is shown in Figure \ref{fig:prob}. For the temperature 1.0 the possible states are all close to -2.0, with two states highly more probable than the others. For the temperature 2.4, the distribution is closer to a normal distribution, with the most probable states around -1.2. The expectation value and variance of $E$ for the same temperatures are shown in Table \ref{tab:prob}.
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{probability.pdf}
-	\caption{Plot over probabilities for a given energy $E$ per spin. The top plot is for temperature $T = 1.0$ while the bottom plot is for temperature $T=2.4$. $10^6$ $mcs$ were used.}
+	\caption{Plot over probabilities for a given energy $E$ per spin. The top plot is for temperature $T = 1.0$ while the bottom plot is for temperature $T=2.4$. $10^6$ $mcs$ were used. Lattice size $L=20$ was used.}
 	\label{fig:prob}
 \end{figure}
 \begin{table}[htbp]
@@ -30,10 +32,17 @@ The probability distribution of $E$ per spin is shown in Figure \ref{fig:prob}. 
 		1.0   & -1.997 & 0.025 \\
 		2.4 & -1.237  & 8.116
 	\end{tabular}
-	\caption{Table over the expectation value  $\left\langle E\right\rangle$ and variation  $\sigma^2$ of the energy per spin after $10^6$ $mcs$ for temperatures $T=1.0$ and $T=2.4$.}
+	\caption{Table over the expectation value  $\left\langle E\right\rangle$ and variation  $\sigma^2$ of the energy per spin after $10^6$ $mcs$ for temperatures $T=1.0$ and $T=2.4$. Lattice size $L=20$ was used.}
 	\label{tab:prob}
 \end{table}
 
+Figure \ref{fig:E} and \ref{fig:M} shows the expectation values for the energy and the absolute magnetisation from $T=2.0$ to $T=2.3$, while Figure \ref{fig:C} and \ref{fig:Chi} shows the specific heat and susceptibility for the same temperature interval. In all these plots results for lattices with size $L=40,60,80$ and 100 are shown. 
+
+In the energy plot, all expectation values are negative, and increases as temperature increase. For temperatures under 2.25, all the lattices gives the same results, but for higher temperatures, the values slightly diverge from each other.
+ 
+A similar trend is found in the plot of the absolute magnetisation. The values for the different lattices are very similar until a temperature of about 2.20, and then diverge. Comparing the energy and magnetisation plots, the magnetisation values diverge more strongly from each other. All the magnetisation values are positive, and decrease as the temperature increases.   
+
+The plots over the specific heat and the susceptibility does also feature a divergent trend in the temperature interval 2.20 to 2.30. In addition, the plots are less smooth in this interval. The specific heat values increase with temperature until they reach a maxima between 2.25 and 2.30. The maximum values are slightly shifted towards lower temperatures as L increase. In the susceptibility plot, only the results for the lattice size $L=100$ has a maxima in this interval.  
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{energy.pdf}
@@ -44,14 +53,14 @@ The probability distribution of $E$ per spin is shown in Figure \ref{fig:prob}. 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{heat_capacity.pdf}
-	\caption{Plot over the expectation value for the absolute magnetisation per spin $\left\langle |M|\right\rangle$ as a function of temperature $T$ with step size $10^{-3}$. The results are from lattices with size $L=40,60,80$ and 100. $10^6$ $mcs$ were used for each step.}
+	\caption{Plot over the expectation valuess for the specific heat per spin $C_V$ as a function of temperature $T$ with step size $10^{-3}$. The results are from lattices with size $L=40,60,80$ and 100. $10^6$ $mcs$ were used for each step.}
 	\label{fig:C}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{magnetization.pdf}
-	\caption{Plot over the expectation valuess for the specific heat per spin $C_V$ as a function of temperature $T$ with step size $10^{-3}$. The results are from lattices with size $L=40,60,80$ and 100. $10^6$ $mcs$ were used for each step.}
+	\caption{Plot over the expectation value for the absolute magnetisation per spin $\left\langle |M|\right\rangle$ as a function of temperature $T$ with step size $10^{-3}$. The results are from lattices with size $L=40,60,80$ and 100. $10^6$ $mcs$ were used for each step.}
 	\label{fig:M}
 \end{figure}
 
@@ -62,6 +71,7 @@ The probability distribution of $E$ per spin is shown in Figure \ref{fig:prob}. 
 	\label{fig:Chi}
 \end{figure}
 
+Figure \ref{fig:zoom} shows results for the specific heat in the temperature interval 2.26 to 2.30 with a higher resolution than Figure \ref{fig:C}. In addition, a running mean is shown.  
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{zoom.pdf}
@@ -69,3 +79,24 @@ The probability distribution of $E$ per spin is shown in Figure \ref{fig:prob}. 
 	\label{fig:zoom}
 \end{figure}
 
+
+\begin{table}[]
+	\centering
+	\begin{tabular}{rrrrr}
+		$L_i$         & $L_j$ & LR  & HR & HRRM \\
+		\hline
+		\addlinespace[0.1cm]
+		60            & 40    & 2.260 & 2.267 & 2.272     \\
+		80            & 40    & 2.270 & 2.269 & 2.268     \\
+		80            & 60    & 2.280 & 2.271 & 2.264     \\
+		100           & 40    & 2.257 & 2.262 & 2.263     \\
+		100           & 60    & 2.255 & 2.260 & 2.259     \\
+		100           & 80    & 2.230 & 2.249 & 2.254     \\
+		\hline
+		\addlinespace[0.1cm]
+		\textbf{Mean} &       & 2.259 & 2.263 & 2.263     \\
+		\textbf{STD}  &       & 0.015 & 0.007 & 0.006    
+	\end{tabular}
+	\caption{Critical temperature calculated using eq. \ref{eq:Tc} for different lattice sizes $L$. Results using low resolution values plotted in Figure \ref{fig:C} (LR), high resolution values (HR) and the running mean of the high resolution values (RMHR) plotted in Figure \ref{fig:zoom} are shown. In addition, the mean and standard deviation (STD) for each set of values are shown.}
+	\label{tab:Tc}
+\end{table}

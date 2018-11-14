@@ -41,6 +41,7 @@ def findTcInf(path, files, runningMean = False):
         indexTc = np.argmax(var)
         Tc.append(T[indexTc])
         for j in range(i):
+            print("i: ", i, "j: ", j, "Tc: ", (Tc[i]*L[i]-Tc[j]*L[j])/(L[i]-L[j]))
             Tc_inf.append((Tc[i]*L[i]-Tc[j]*L[j])/(L[i]-L[j]))
     return np.mean(Tc_inf), np.std(Tc_inf)
 
@@ -70,7 +71,7 @@ for i in [1,2,3,4]:
     ax.set_xlabel("T",fontsize=14)
     ax.set_ylabel(variables[i-1],fontsize=14)
     #plt.savefig(figdir+names[i-1])
-'''
+
 for i in [2]:
     fig, ax = plt.subplots()
     colors = []
@@ -85,9 +86,13 @@ for i in [2]:
                     Line2D([0], [0], color=colors[3])]
     ax.legend(custom_lines,legends,loc='upper center', bbox_to_anchor=(0.5, 1.18),fontsize=14, frameon=False, ncol=2)
     #plt.savefig(figdir+"zoom.pdf")
+'''
 
 Tc, std = findTcInf(path, files)
 print("Forventningsverdi Tc: ", Tc, "Standardavvik: ", std)
+
+Tc_zoom, std_zoom = findTcInf(path, files_zoom)
+print("Forventningsverdi Tc: ", Tc_zoom, "Standardavvik: ", std_zoom)
 
 Tc_zoom, std_zoom = findTcInf(path, files_zoom, runningMean = True)
 print("Forventningsverdi Tc: ", Tc_zoom, "Standardavvik: ", std_zoom)
