@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.24)  14 NOV 2018 12:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.8.24)  16 NOV 2018 13:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -672,7 +672,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 20.
 
-(./main.aux (./appendix.aux))
+(./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
@@ -689,8 +689,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
 LaTeX Font Info:    ... okay on input line 25.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
 LaTeX Font Info:    ... okay on input line 25.
-
-(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count127
 \scratchdimen=\dimen148
@@ -745,25 +744,28 @@ LaTeX Info: Redefining \nameref on input line 25.
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
- (./abstract.tex) (./introduction.tex) (./methods.tex
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+ (./abstract.tex) (./introduction.tex)
+Underfull \hbox (badness 1205) in paragraph at lines 3--39
+\OT1/cmr/m/n/10.95 Starting with the meth-ods sec-tion, I will
+ []
+
+(./methods.tex [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 3780) in paragraph at lines 56--56
+Underfull \hbox (badness 3780) in paragraph at lines 58--58
 []\OT1/cmr/bx/n/10.95 Phase tran-si-tions and crit-i-cal
  []
 
 
-Underfull \hbox (badness 1490) in paragraph at lines 104--104
+Underfull \vbox (badness 4144) has occurred while \output is active []
+
+ [2]
+Underfull \hbox (badness 1490) in paragraph at lines 109--109
 []\OT1/cmr/bx/n/10.95 Probability dis-tri-bu-tion of the
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2])
-(./results.tex <../figurer/EMvsMCS.pdf, id=90, 462.52798pt x 346.89601pt>
+) (./results.tex <../figurer/EMvsMCS.pdf, id=89, 462.52798pt x 346.89601pt>
 File: ../figurer/EMvsMCS.pdf Graphic file (type pdf)
 
 <use ../figurer/EMvsMCS.pdf>
@@ -774,89 +776,93 @@ Overfull \hbox (5.0pt too wide) in paragraph at lines 6--7
  [][] 
  []
 
-<../figurer/nAccepted.pdf, id=92, 462.52798pt x 346.89601pt>
+[3] <../figurer/nAccepted.pdf, id=101, 462.52798pt x 346.89601pt>
 File: ../figurer/nAccepted.pdf Graphic file (type pdf)
 
 <use ../figurer/nAccepted.pdf>
-Package pdftex.def Info: ../figurer/nAccepted.pdf used on input line 14.
+Package pdftex.def Info: ../figurer/nAccepted.pdf used on input line 18.
 (pdftex.def)             Requested size: 226.0pt x 169.49884pt.
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 14--15
+Overfull \hbox (5.0pt too wide) in paragraph at lines 18--19
  [][] 
  []
 
-<../figurer/probability.pdf, id=95, 462.52798pt x 346.89601pt>
+<../figurer/probability.pdf, id=104, 462.52798pt x 346.89601pt>
 File: ../figurer/probability.pdf Graphic file (type pdf)
 
 <use ../figurer/probability.pdf>
-Package pdftex.def Info: ../figurer/probability.pdf used on input line 22.
+Package pdftex.def Info: ../figurer/probability.pdf used on input line 26.
 (pdftex.def)             Requested size: 226.0pt x 169.49884pt.
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 22--23
+Overfull \hbox (5.0pt too wide) in paragraph at lines 26--27
  [][] 
  []
 
-[3 <../figurer/EMvsMCS.pdf>]
-<../figurer/energy.pdf, id=146, 462.52798pt x 346.89601pt>
+[4 <../figurer/EMvsMCS.pdf> <../figurer/nAccepted.pdf
+
+pdfTeX warning: /usr/bin/pdflatex (file ../figurer/nAccepted.pdf): PDF inclusio
+n: multiple pdfs with page group included in a single page
+>] <../figurer/energy.pdf, id=170, 462.52798pt x 346.89601pt>
 File: ../figurer/energy.pdf Graphic file (type pdf)
 
 <use ../figurer/energy.pdf>
-Package pdftex.def Info: ../figurer/energy.pdf used on input line 48.
+Package pdftex.def Info: ../figurer/energy.pdf used on input line 52.
 (pdftex.def)             Requested size: 226.0pt x 169.49884pt.
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 48--49
+Overfull \hbox (5.0pt too wide) in paragraph at lines 52--53
  [][] 
  []
 
-<../figurer/heat_capacity.pdf, id=147, 462.52798pt x 346.89601pt>
+<../figurer/heat_capacity.pdf, id=171, 462.52798pt x 346.89601pt>
 File: ../figurer/heat_capacity.pdf Graphic file (type pdf)
 
 <use ../figurer/heat_capacity.pdf>
-Package pdftex.def Info: ../figurer/heat_capacity.pdf used on input line 55.
+Package pdftex.def Info: ../figurer/heat_capacity.pdf used on input line 59.
 (pdftex.def)             Requested size: 226.0pt x 169.49884pt.
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 55--56
+Overfull \hbox (5.0pt too wide) in paragraph at lines 59--60
  [][] 
  []
 
-<../figurer/magnetization.pdf, id=148, 462.52798pt x 346.89601pt>
+<../figurer/magnetization.pdf, id=172, 462.52798pt x 346.89601pt>
 File: ../figurer/magnetization.pdf Graphic file (type pdf)
 
 <use ../figurer/magnetization.pdf>
-Package pdftex.def Info: ../figurer/magnetization.pdf used on input line 62.
+Package pdftex.def Info: ../figurer/magnetization.pdf used on input line 66.
 (pdftex.def)             Requested size: 226.0pt x 169.49884pt.
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 62--63
+Overfull \hbox (5.0pt too wide) in paragraph at lines 66--67
  [][] 
  []
 
-<../figurer/susceptibility.pdf, id=149, 462.52798pt x 346.89601pt>
+<../figurer/susceptibility.pdf, id=173, 462.52798pt x 346.89601pt>
 File: ../figurer/susceptibility.pdf Graphic file (type pdf)
 
 <use ../figurer/susceptibility.pdf>
-Package pdftex.def Info: ../figurer/susceptibility.pdf used on input line 69.
+Package pdftex.def Info: ../figurer/susceptibility.pdf used on input line 73.
 (pdftex.def)             Requested size: 226.0pt x 169.49884pt.
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 69--70
+Overfull \hbox (5.0pt too wide) in paragraph at lines 73--74
  [][] 
  []
 
-<../figurer/zoom.pdf, id=152, 462.52798pt x 346.89601pt>
+<../figurer/zoom.pdf, id=176, 462.52798pt x 346.89601pt>
 File: ../figurer/zoom.pdf Graphic file (type pdf)
 
 <use ../figurer/zoom.pdf>
-Package pdftex.def Info: ../figurer/zoom.pdf used on input line 77.
+Package pdftex.def Info: ../figurer/zoom.pdf used on input line 81.
 (pdftex.def)             Requested size: 226.0pt x 169.49884pt.
 
-Overfull \hbox (5.0pt too wide) in paragraph at lines 77--78
+Overfull \hbox (5.0pt too wide) in paragraph at lines 81--82
  [][] 
  []
 
-[4 <../figurer/nAccepted.pdf> <../figurer/probability.pdf
 
-pdfTeX warning: /usr/bin/pdflatex (file ../figurer/probability.pdf): PDF inclus
-ion: multiple pdfs with page group included in a single page
->] [5 <../figurer/energy.pdf> <../figurer/heat_capacity.pdf
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 87.
+
+) [5 <../figurer/probability.pdf>] [6 <../figurer/energy.pdf> <../figurer/heat_
+capacity.pdf
 
 pdfTeX warning: /usr/bin/pdflatex (file ../figurer/heat_capacity.pdf): PDF incl
 usion: multiple pdfs with page group included in a single page
@@ -868,26 +874,19 @@ usion: multiple pdfs with page group included in a single page
 
 pdfTeX warning: /usr/bin/pdflatex (file ../figurer/susceptibility.pdf): PDF inc
 lusion: multiple pdfs with page group included in a single page
->]
+>] (./discussion.tex
+Underfull \vbox (badness 1253) has occurred while \output is active []
 
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 83.
-
-) (./discussion.tex) (./main.bbl
+ [7 <../figurer/zoom.pdf>]) (./main.bbl
 Underfull \hbox (badness 1642) in paragraph at lines 4--6
 []\OT1/cmr/m/n/10.95 Morten Hjorth-Jensen.  Com-pu-ta-tional
  []
 
-) [6 <../figurer/zoom.pdf>]
-\openout2 = `appendix.aux'.
-
- (./appendix.tex) [7
-
-
-]
+)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 52.
+ [8]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 52.
- (./main.aux (./appendix.aux))
+ (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 52.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 52.
 Package rerunfilecheck Info: File `main.out' has not changed.
@@ -895,10 +894,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 52.
  ) 
 Here is how much of TeX's memory you used:
- 7785 strings out of 493029
- 111593 string characters out of 6136234
- 226921 words of memory out of 5000000
- 11148 multiletter control sequences out of 15000+600000
+ 7778 strings out of 493029
+ 111499 string characters out of 6136234
+ 229608 words of memory out of 5000000
+ 11146 multiletter control sequences out of 15000+600000
  10363 words of font info for 37 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  29i,18n,30p,869b,509s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -917,10 +916,10 @@ mr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on main.pdf (7 pages, 390968 bytes).
+Output written on main.pdf (8 pages, 399343 bytes).
 PDF statistics:
- 371 PDF objects out of 1000 (max. 8388607)
- 298 compressed objects within 3 object streams
- 46 named destinations out of 1000 (max. 500000)
+ 394 PDF objects out of 1000 (max. 8388607)
+ 319 compressed objects within 4 object streams
+ 47 named destinations out of 1000 (max. 500000)
  121 words of extra memory for PDF output out of 10000 (max. 10000000)
 

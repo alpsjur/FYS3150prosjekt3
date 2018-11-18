@@ -8,11 +8,15 @@ Figure \ref{fig:EMvsMCS} shows the expectation values for the energy and absolut
 	\label{fig:EMvsMCS}
 \end{figure}
 
-In Figure \ref{fig:nAccepted}, the number of accepted configurations as a function of Monte Carlo cycles is shown. Again this is plotted for temperatures 1.0 and 2.4, with both an unordered and ordered initial configuration. FLAGG uteseende på grafene FLAGG
+In Figure \ref{fig:nAccepted}, the number of accepted configurations as a function of Monte Carlo cycles is shown. Again this is plotted for temperatures 1.0 and 2.4, with both an unordered and ordered initial configuration. 
+
+In the case of an ordered initial configuration for the lower temperature, the graph is linear in the logarithmic space, with a slope of about 1. Looking at the graphs for the higher temperature, the same trend can be seen, with the graphs shifted upward a distance of about 1 in log space compared to the lower temperature. For few $mcs$, one can see that the higher temperature graph with an unordered initial configuration lays slightly over the graph for the ordered initial configuration. 
+
+The graph for the lower temperature with an unordered starting configuration starts of with about $10^3$ accepted new configurations for 10 $mcs$, well above the ordered case. From about $10^4$ $mcs$ and out, the two graphs follow each other. 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{nAccepted.pdf}
-	\caption{Plot over the number of accepted configurations as a function of Monte Carlo sweeps $mcs$. The number of accepted configurations are plotted for $T=1.0$ and $T=2.4$ with both an ordered and unordered initial state. Lattice size $L=20$ was used. The scale is logarithmic.}
+	\caption{Plot over the accumulated number of accepted configurations as a function of Monte Carlo sweeps $mcs$. The number of accepted configurations are plotted for $T=1.0$ and $T=2.4$ with both an ordered and unordered initial state. Lattice size $L=20$ was used. The scale is logarithmic.}
 	\label{fig:nAccepted}
 \end{figure}
 
@@ -79,7 +83,7 @@ Figure \ref{fig:zoom} shows results for the specific heat in the temperature int
 	\label{fig:zoom}
 \end{figure}
 
-
+Table \ref{tab:Tc} lists the calculated values for the critical temperature $T_c$ in the thermodynamic limit $L \rightarrow \infty$  using the data shown in Figure \ref{fig:C} and \ref{fig:zoom}. One can see that all means are within one standard deviation from the analytical value. The higher resolution data set (Figure \ref{fig:zoom}) gives a mean value closer to the analytical value. There mean value of the results using a running mean is the same as when no running mean is applied. 
 \begin{table}[]
 	\centering
 	\begin{tabular}{rrrrr}
@@ -97,6 +101,6 @@ Figure \ref{fig:zoom} shows results for the specific heat in the temperature int
 		\textbf{Mean} &       & 2.259 & 2.263 & 2.263     \\
 		\textbf{STD}  &       & 0.015 & 0.007 & 0.006    
 	\end{tabular}
-	\caption{Critical temperature calculated using eq. \ref{eq:Tc} for different lattice sizes $L$. Results using low resolution values plotted in Figure \ref{fig:C} (LR), high resolution values (HR) and the running mean of the high resolution values (RMHR) plotted in Figure \ref{fig:zoom} are shown. In addition, the mean and standard deviation (STD) for each set of values are shown.}
+	\caption{Critical temperature in the thermodynamic limit $L \rightarrow \infty$ calculated using eq. \ref{eq:Tc} for different lattice sizes $L$. Results using low resolution values (LR) plotted in Figure \ref{fig:C}, high resolution values (HR) and the running mean of the high resolution values (HRRM) plotted in Figure \ref{fig:zoom} are shown. In addition, the mean value and standard deviation (STD) for each set of values are shown.}
 	\label{tab:Tc}
 \end{table}

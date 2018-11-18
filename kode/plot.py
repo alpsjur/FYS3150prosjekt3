@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+import matplotlib.mlab as mlab
 import numpy as np
 import seaborn as sns
 
@@ -13,11 +14,13 @@ def plotDatavsMCS(ax, path, filename, i, line='.'):
 
 def plotProbability(ax, path, filename):
     data = np.loadtxt(path+filename)
-    expE = data[0,0]; var = data[0,1]; sigma = np.sqrt(var)
+    expE = data[0,0]; var = data[0,1]; sigma = np.sqrt(var/20/20)
     E = data[1:,0]; p = data[1:,1]
     #print(expE); print(var)
     #ax.axvspan(expE-sigma, expE+sigma, alpha=0.4,color='lightblue')
     #ax.axvline(x=expE,color="grey")
+    #gaus = mlab.normpdf(E, expE, sigma)
+    #ax.plot(E,gaus/np.sum(gaus))
     #print(np.sum(p))
     line, = ax.plot(E,p,'.')
     #ax.bar(E, p,0.01)
@@ -71,6 +74,9 @@ plotDatavsMCS(ax, path, "count_unordered_1.bin", 7, '-')
 plotDatavsMCS(ax, path, "count_ordered_1.bin", 7, '-')
 plotDatavsMCS(ax, path, "count_unordered_24.bin", 7, '-')
 plotDatavsMCS(ax, path, "count_ordered_24.bin", 7, '-')
+#mcs = np.linspace(10,10**6)
+#nSpins = 20*20
+#ax.plot(mcs, nSpins*mcs, '--', color="lightgrey")
 
 ax.set_xscale('log')
 ax.set_yscale('log')
@@ -78,7 +84,7 @@ ax.set_yscale('log')
 
 ax.legend(custom_lines,["Unordered T=1.0","Ordered T=1.0", "Unordered T=2.4", "Ordered T=2.4"],\
               loc='upper center', bbox_to_anchor=(0.5, 1.18),fontsize=14, frameon=False, ncol=2)
-#ax.set_yscale('log')
+
 ax.set_xlabel("mcs",fontsize=14)
 ax.set_ylabel("\# accepted configurations",fontsize=14)
 #plt.savefig(figdir+"nAccepted.pdf")
@@ -100,4 +106,4 @@ ax[0].legend(custom_lines,["T=1.0","T=2.4"], loc='upper center',
              bbox_to_anchor=(0.5, 1.3),fontsize=14, frameon=False, ncol=2)
 #plt.savefig(figdir+"probability.pdf")
 
-#plt.show()
+plt.show()

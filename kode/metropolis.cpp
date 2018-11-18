@@ -12,6 +12,7 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
     w[i*4] = exp(-beta*J*(i*4-8));
   }
   double E = 0; double M = 0;
+  count = 0; 
   initialize(L, spinMatrix, values, E, M, J, ordered);
   //går gjennom gitt antall monte carlo sykluser (mcs)
   for (int i = 0; i < mcs; ++i){

@@ -26,7 +26,7 @@ def findTc(path, filename, nVar):
     data = np.loadtxt(path+filename)
     T = data[:,0]; var = data[:,nVar];
     indexTc = np.argmax(var)
-    return T[indexTc]
+    return T[indexTc], var[indexTc]
 
 def findTcInf(path, files, runningMean = False):
     Tc = []
@@ -55,14 +55,13 @@ plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
 
 
-variables = [r"$\left\langle E\right\rangle$",r"$C_V$",r"$\left\langle M\right\rangle$",r"$\chi$", r"$\left\langle M\right\rangle$"]
+variables = [r"$\left\langle E\right\rangle$",r"$C_V$",r"$\left\langle |M|\right\rangle$",r"$\chi$", r"$\left\langle M\right\rangle$"]
 legends = ["L=40","L=60", "L=80", "L=100"]
 L = [40,60,80,100]
 names=["energy.pdf","heat_capacity.pdf","magnetization.pdf","susceptibility.pdf"]
 files = ["metropolis40.dat", "metropolis60.dat", "metropolis80.dat", "metropolis100.dat"]
 files_zoom = ["metropolis40_zoom.dat","metropolis60_zoom.dat", "metropolis80_zoom.dat", "metropolis100_zoom.dat"]
 
-'''
 for i in [1,2,3,4]:
     fig, ax = plt.subplots()
     for file in files:
@@ -72,6 +71,8 @@ for i in [1,2,3,4]:
     ax.set_ylabel(variables[i-1],fontsize=14)
     #plt.savefig(figdir+names[i-1])
 
+
+'''
 for i in [2]:
     fig, ax = plt.subplots()
     colors = []
@@ -86,7 +87,7 @@ for i in [2]:
                     Line2D([0], [0], color=colors[3])]
     ax.legend(custom_lines,legends,loc='upper center', bbox_to_anchor=(0.5, 1.18),fontsize=14, frameon=False, ncol=2)
     #plt.savefig(figdir+"zoom.pdf")
-'''
+
 
 Tc, std = findTcInf(path, files)
 print("Forventningsverdi Tc: ", Tc, "Standardavvik: ", std)
@@ -96,5 +97,8 @@ print("Forventningsverdi Tc: ", Tc_zoom, "Standardavvik: ", std_zoom)
 
 Tc_zoom, std_zoom = findTcInf(path, files_zoom, runningMean = True)
 print("Forventningsverdi Tc: ", Tc_zoom, "Standardavvik: ", std_zoom)
+
+'''
+
 
 plt.show()

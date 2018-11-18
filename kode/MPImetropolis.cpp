@@ -20,7 +20,7 @@ int main(int argc, char* argv[]){
   double initialT = 2.26;
   double finalT = 2.30;
   double dT = 0.001;
-  bool ordered = false;
+  bool ordered = true;
   int stabilizedMCS = 25e3;
 
 

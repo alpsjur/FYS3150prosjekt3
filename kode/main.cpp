@@ -16,7 +16,7 @@ void calculateProbability(double T, string filename);
 
 int main(int argc, char const *argv[]) {
 
-  /*
+
   string file1 = "../data/EMvsMCS_ordered_1.bin";
   string file2 = "../data/EMvsMCS_unordered_1.bin";
   string file3 = "../data/EMvsMCS_ordered_24.bin";
@@ -28,15 +28,15 @@ int main(int argc, char const *argv[]) {
   solveForDifferentMCS(1, false, file2, mcsStart, mcsStop, mcsStep);
   solveForDifferentMCS(2.4, true, file3, mcsStart, mcsStop, mcsStep);
   solveForDifferentMCS(2.4, false, file4, mcsStart, mcsStop, mcsStep);
-  */
 
+/*
 
   string file5 = "../data/count_ordered_1.bin";
   string file6 = "../data/count_unordered_1.bin";
   string file7 = "../data/count_ordered_24.bin";
   string file8 = "../data/count_unordered_24.bin";
 
-  int mcsStart=10, mcsStop=1e7, mcsStep=10;
+  int mcsStart=10, mcsStop=1e6, mcsStep=10;
   solveForDifferentMCS2(1, true, file5, mcsStart, mcsStop, mcsStep);
   solveForDifferentMCS2(1, false, file6, mcsStart, mcsStop, mcsStep);
   solveForDifferentMCS2(2.4, true, file7, mcsStart, mcsStop, mcsStep);
@@ -48,7 +48,7 @@ int main(int argc, char const *argv[]) {
 
   calculateProbability(1, file9);
   calculateProbability(2.4, file10);
-
+*/
   return 0;
 }
 
@@ -68,7 +68,7 @@ void solveForDifferentMCS(double T, bool ordered, string filename, int mcsStart,
   int L = 20; double p[1000]; int stabilizedMCS = 0; int numprocs = 1;
 
   double J = 1; double k = 1; double beta = 1/(k*T);
-  double values[5]; long idum = -1; int count; double mcsDouble, countDouble;
+  double values[5]; long idum = -1; int count = 0; double mcsDouble, countDouble;
 
   ofstream file(filename, ofstream::binary);
   for (int mcs = mcsStart; mcs <= mcsStop; mcs+=mcsStep){

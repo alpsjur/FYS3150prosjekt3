@@ -6,11 +6,11 @@ In this report I will study different thermodynamic properties of a Canonical En
 \begin{equation}\label{eq:prob}
 	P_i(\beta) =  \frac{e^{-\beta E_i}}{Z},
 \end{equation}
-where $\beta = \frac{1}{k_B T}$, $k_B$ is the Boltzmann constant, and $E_i$ is the energy in a given microstate. $Z$ is the partition function given by 
+where $\beta = 1/{k_B T}$, $k_B$ is the Boltzmann constant, and $E_i$ is the energy in a given microstate. $Z$ is the partition function given by 
 \begin{equation}
  Z = \sum_{i}  e^{-\beta E_i}.
 \end{equation}
- The expectation value to a given variable $A$ is given by 
+ The expectation value of a given variable $A$ is given by 
  \begin{equation}\label{eq:expect}
   \left\langle A\right\rangle = \frac{1}{Z}\sum_{i=1}^{N} D_i A_i  e^{- \beta E_i} 
  \end{equation}   
@@ -47,20 +47,25 @@ For smaller systems, it is possibly to calculate the expectation values analytic
 		1                   & 4          & 0      & -2            \\
 		0                   & 1          & -8J    & -4           
 	\end{tabular}
-	\caption{The different states according to their energy and magnetization for a $2\times 2$ lattice.}
+	\caption{The different states for a $2\times 2$ lattice. For each possibility of number of spins up, the degeneracy (D), energy (E) and magnetisation (M) is listed.}
 	\label{tab:L2 values}
 \end{table}
 
-FLAGG boundary conditions FLAGG 
+In the Ising model you can have both open and periodic boundary conditions. In this report, periodic boundaries are used. This can be visualized as the lattice being wrapped around itself so that all ends meet, i.e. if you move to the end of a row/column, you go back to the beginning of that row/column. 
+
+Two different initial configurations will be presented in this report. One is an ordered configuration, which means that all spins point in the same direction. In an unordered configuration, each spin has a random direction. 
 
 \subsubsection{Phase transitions and critical temperature in the Ising model}
+A phase transition is an often discontinuous change in properties of a system as a result of changing external conditions, for example a change in temperature. The two dimensional Ising model exhibits a phase transition at a critical themperature $T_C$. For temperatures below $T_C$, the mean magnetisation is different from zero, while above $T_C$ we have $\left\langle M\right\rangle =0$. In the thermodynamic limit of an infinite large lattice, the specific heat $C_V$ and susceptibility $\chi$ is discontinuous at $T_c$. In the case of a finite lattice we will not observe that these quantities diverge. We will however observe a maxima in $C_V$. The critical temperature of an infinite and finite lattice is connected by the following relation    
 \begin{equation}
-T_C(L) - T_C(L=\infty) = aL^{-1/\nu}
+T_C(L) - T_C(L=\infty) = aL^{-1/\nu},
 \end{equation}
-
+where $a$ is a constant, and $\nu$ is connected to the correlation length. See \cite{lecturenotes} for a more detailed description. 
+By setting $\nu=1$, you can obtain the following expression for $T_C$ in the thermodynamic limit of $L\rightarrow \infty$:
 \begin{equation}\label{eq:Tc}
-T_C(L=\infty) = \frac{T_C(L_i)L_i-T_C(L_j)L_j}{L_i-L_j}
+T_C(L=\infty) = \frac{T_C(L_i)L_i-T_C(L_j)L_j}{L_i-L_j}.
 \end{equation}
+$T_C\left( L_i\right)$ and $T_C\left( L_j\right)$ can be found by finding the temperature when $C_V$ reaches its maximum value in the solution for the Ising model with lattice size $L_i$ and $L_j$. For $\nu=1$, the exact solution is given by s $kTC /J = 2/\ln{\left( 1+\sqrt{2}\right)} \approx 2.269$ \cite{tcExact}.
 
 \subsubsection{Metropolis' algorithm}
 One possibly way of solving the Ising model is by using the so called Metropolis' algorithm. The key concept in this algorithm is to generates steps in a Marcov chain, with a method for rejecting new steps. The Markov chain will eventually reach the most likely state. Algorithm \ref{alg:met} shows Metropolis' algorithm adapted for Ising's model, and is based on the algorithm found in \cite{lecturenotes}. For each spin in the lattice, a random spin is flipped. The energy difference is then computed, and the transition probability $w$ is computed as
@@ -102,7 +107,7 @@ is compared with a number $r$ given by a random number generator (RNG) with an u
 \end{algorithm}
 
 \subsubsection{Probability distribution of the energies}
-One of the properties of the Ising model addressed in this report is the probability distribution of the energy states $p(E)$. In order to determine the distribution, the number of times each energy appears after the termalization time is counted, and then divided by the total number of samples. This is done for temperatures 1.0 $k_BT/J$ and 2.4 $k_BT/J$. This is compared with the variance of the energy, given as
+One of the properties of the Ising model addressed in this report is the probability distribution of the energy states $p(E)$. In order to determine the distribution, the number of times each energy appears after the termalization time is counted, and then divided by the total number of samples. This is done for temperatures 1.0 $k_BT/J$ and 2.4 $k_BT/J$. The resulting probability distribution is then compared with the variance of the energy, given as
 \begin{equation}
  \sigma_E^2 = \left\langle E^2\right\rangle - \left\langle E\right\rangle^2 .
 \end{equation}  
