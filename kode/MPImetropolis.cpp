@@ -13,13 +13,14 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
                  long &idum, int, bool ordered);
 
 int main(int argc, char* argv[]){
+  //definerer variabler
   int L = atoi(argv[2]);
   int mcs = 1e6;
   double J = 1;
   double k = 1;
-  double initialT = 2.26;
+  double initialT = 2.00;
   double finalT = 2.30;
-  double dT = 0.001;
+  double dT = 0.01;
   bool ordered = true;
   int stabilizedMCS = 25e3;
 
@@ -40,7 +41,6 @@ int main(int argc, char* argv[]){
     ofile.open(outfilename, ofstream::app);
   }
 
-
   //bestemmer hvor mange mcs hver prosess skal kjøre.
   int my_mcs = mcs/numprocs;
   if ( (my_rank == numprocs-1) &&((mcs%numprocs)!=0) ) my_mcs += mcs%numprocs;
@@ -52,7 +52,7 @@ int main(int argc, char* argv[]){
   MPI_Bcast (&dT, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
   //hver node har et eget tilfeldig-tall-frø/seed
-  idum = -1-my_rank;  // random starting point
+  idum = -1-my_rank;
 
   //looper over alle T-verdien, tar tiden
   double  TimeStart, TimeEnd, TotalTime;
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]){
       MPI_Reduce(&values[i], &collectedValues[i], 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
     }
 
-    // printer resultat
+    // skriver resultat til fil
     if ( my_rank == 0) {
       calculateVarNormalize(collectedValues, L, mcs, stabilizedMCS,numprocs);
       calculateCChi(collectedValues, k, T);
@@ -85,17 +85,18 @@ int main(int argc, char* argv[]){
   TimeEnd = MPI_Wtime();
   TotalTime = TimeEnd-TimeStart;
   if ( my_rank == 0) {
-    ofile.close();  // close output file
+    ofile.close();
     cout << "Time = " <<  TotalTime  << " on number of processors: "  << numprocs  << endl;
   }
 
-  // End MPI
+  //Avslutter MPI
   MPI_Finalize ();
   return 0;
 }
 
 void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
                  long &idum, int stabilizedMCS, bool ordered){
+  //definerer variabler
   double beta = 1/(k*T);
   double w[17];
   imat spinMatrix;
@@ -127,6 +128,7 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
         M += (double) 2*spinMatrix(l,m);
       }
     }
+    //oppdaterer variabler 
     if (i > stabilizedMCS){
       values[0] += (double) E;
       values[1] += (double) E*E;

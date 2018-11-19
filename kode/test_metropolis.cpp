@@ -47,7 +47,7 @@ TEST_CASE("Tester om vi faar riktige forventningsverdier når L=2"){
 
 }
 
-TEST_CASE("Tester om summen av de beregnede sannsynlighetene er 1"){
+TEST_CASE("Tester om summen av beregned sannsynlighet er 1"){
   double J = 1; double k = 1; int L = 10;
   int mcs = 1e6;
   double values[5]; long idum = -1;

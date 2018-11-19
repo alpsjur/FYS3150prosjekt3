@@ -1,3 +1,5 @@
+/* Kode som genererer alt av data som ikke er parallelisert */
+
 //#include "mpi.h"
 #include <cmath>
 #include <iostream>
@@ -15,8 +17,9 @@ void solveForDifferentMCS2(double T, bool ordered, string filename, int, int, in
 void calculateProbability(double T, string filename);
 
 int main(int argc, char const *argv[]) {
+  //genererer data for å sammenligne ordered og unordered initsiell konfigurasjon
 
-
+  //først sammenligne energi og magnetisering med mcs...
   string file1 = "../data/EMvsMCS_ordered_1.bin";
   string file2 = "../data/EMvsMCS_unordered_1.bin";
   string file3 = "../data/EMvsMCS_ordered_24.bin";
@@ -29,26 +32,26 @@ int main(int argc, char const *argv[]) {
   solveForDifferentMCS(2.4, true, file3, mcsStart, mcsStop, mcsStep);
   solveForDifferentMCS(2.4, false, file4, mcsStart, mcsStop, mcsStep);
 
-/*
-
+  //så data for å sammenligne antall aksepterte nye konfigurasjoner
   string file5 = "../data/count_ordered_1.bin";
   string file6 = "../data/count_unordered_1.bin";
   string file7 = "../data/count_ordered_24.bin";
   string file8 = "../data/count_unordered_24.bin";
 
-  int mcsStart=10, mcsStop=1e6, mcsStep=10;
+  mcsStart=10; mcsStop=1e6; mcsStep=10;
   solveForDifferentMCS2(1, true, file5, mcsStart, mcsStop, mcsStep);
   solveForDifferentMCS2(1, false, file6, mcsStart, mcsStop, mcsStep);
   solveForDifferentMCS2(2.4, true, file7, mcsStart, mcsStop, mcsStep);
   solveForDifferentMCS2(2.4, false, file8, mcsStart, mcsStop, mcsStep);
 
 
+  //Beregner sannsynlighetsfordeling for to temperaturer
   string file9 = "../data/probability1.dat";
   string file10 = "../data/probability24.dat";
 
   calculateProbability(1, file9);
   calculateProbability(2.4, file10);
-*/
+
   return 0;
 }
 
@@ -110,23 +113,19 @@ void calculateProbability(double T, string filename){
   double values[5]; long idum = -1; int count;
   double p[1000] = {0}; int stabilizedMCS = 3e4; int numprocs = 1;
 
-  //ofstream file(filename, ofstream::binary);
   ofile.open(filename);
 
   solveGivenT(L, mcs, T, k, J, values, idum, stabilizedMCS, ordered, count,p);
   calculateVarNormalize(values, L, mcs, stabilizedMCS, numprocs);
 
-  //file.write(reinterpret_cast<const char*>(&values[0]), sizeof(double));
-  //file.write(reinterpret_cast<const char*>(&values[1]), sizeof(double));
+  //skriver forventningsverdi og varians som første linje
   ofile << values[0] << ' ' << values[1] << endl;
 
   double energy;
+  //skriver alle energiene og sannsynligheten som er ulik null til fil
   for (int i = 0; i<1000;++i){
     if (p[i] != 0){
       energy = -i/(double)(L*L);
-
-      //file.write(reinterpret_cast<const char*>(&energy), sizeof(double));
-      //file.write(reinterpret_cast<const char*>(&p[i]), sizeof(double));
       ofile << setw(5) << setprecision(3) << energy;
       ofile << setw(15) << setprecision(8) << p[i] << endl;
     }

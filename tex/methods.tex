@@ -33,7 +33,7 @@ where $J$ is a coupling constant expressing the strength of the interaction betw
 \begin{equation}
 M = \sum_i s_i.
 \end{equation}
-For smaller systems, it is possibly to calculate the expectation values analytically by finding and counting all the possible states. The different states for a $2\times 2$ lattice are listed in Table \ref{tab:L2 values}, and will be used together with equation (\ref{eq:expect}) and (\ref{eq:prob}) to test if the algorithm reaches the expectation values.
+For smaller systems, it is possibly to calculate the expectation values analytically by finding and counting all the possible states. The different states for a $2\times 2$ lattice are listed in Table \ref{tab:L2 values}, and will be used together with equation (\ref{eq:expect}) and (\ref{eq:prob}) to test if the algorithm produces the expectation values.
 \begin{table}[htbp]
 	\centering
 	\begin{tabular}{rrrr}
@@ -56,7 +56,7 @@ In the Ising model you can have both open and periodic boundary conditions. In t
 Two different initial configurations will be presented in this report. One is an ordered configuration, which means that all spins point in the same direction. In an unordered configuration, each spin has a random direction. 
 
 \subsubsection{Phase transitions and critical temperature in the Ising model}
-A phase transition is an often discontinuous change in properties of a system as a result of changing external conditions, for example a change in temperature. The two dimensional Ising model exhibits a phase transition at a critical themperature $T_C$. For temperatures below $T_C$, the mean magnetisation is different from zero, while above $T_C$ we have $\left\langle M\right\rangle =0$. In the thermodynamic limit of an infinite large lattice, the specific heat $C_V$ and susceptibility $\chi$ is discontinuous at $T_c$. In the case of a finite lattice we will not observe that these quantities diverge. We will however observe a maxima in $C_V$. The critical temperature of an infinite and finite lattice is connected by the following relation    
+A phase transition is an often discontinuous change in properties of a system as a result of changing external conditions, for example a change in temperature. The two dimensional Ising model exhibits a phase transition at a critical themperature $T_C$. For temperatures below $T_C$, the mean magnetisation is different from zero, while above $T_C$ we have $\left\langle M\right\rangle =0$. This phenomena occurs because of the two competing principles of maximizing entropy and minimizing energy. In the thermodynamic limit of an infinite large lattice, the specific heat $C_V$ and susceptibility $\chi$ is discontinuous at $T_c$. In the case of a finite lattice we will not observe that these quantities diverge. We will however observe a maxima in $C_V$. The critical temperature of an infinite and finite lattice is connected by the following relation    
 \begin{equation}
 T_C(L) - T_C(L=\infty) = aL^{-1/\nu},
 \end{equation}
@@ -65,7 +65,7 @@ By setting $\nu=1$, you can obtain the following expression for $T_C$ in the the
 \begin{equation}\label{eq:Tc}
 T_C(L=\infty) = \frac{T_C(L_i)L_i-T_C(L_j)L_j}{L_i-L_j}.
 \end{equation}
-$T_C\left( L_i\right)$ and $T_C\left( L_j\right)$ can be found by finding the temperature when $C_V$ reaches its maximum value in the solution for the Ising model with lattice size $L_i$ and $L_j$. For $\nu=1$, the exact solution is given by s $kTC /J = 2/\ln{\left( 1+\sqrt{2}\right)} \approx 2.269$ \cite{tcExact}.
+$T_C\left( L_i\right)$ and $T_C\left( L_j\right)$ can be found by finding the temperature when $C_V$ reaches its maximum value in the solution for the Ising model with lattice size $L_i$ and $L_j$. For $\nu=1$, the exact solution is given by $kTC /J = 2/\ln{\left( 1+\sqrt{2}\right)} \approx 2.269$ \cite{tcExact}. 
 
 \subsubsection{Metropolis' algorithm}
 One possibly way of solving the Ising model is by using the so called Metropolis' algorithm. The key concept in this algorithm is to generates steps in a Marcov chain, with a method for rejecting new steps. The Markov chain will eventually reach the most likely state. Algorithm \ref{alg:met} shows Metropolis' algorithm adapted for Ising's model, and is based on the algorithm found in \cite{lecturenotes}. For each spin in the lattice, a random spin is flipped. The energy difference is then computed, and the transition probability $w$ is computed as
@@ -73,10 +73,10 @@ One possibly way of solving the Ising model is by using the so called Metropolis
 w=e^{- \beta \Delta E }.
 \end{equation}
 In order to determine if the new state is accepted, the transition probability
-is compared with a number $r$ given by a random number generator (RNG) with an uniform probability distribution. If $w \geq r$, the new state is accepted. The new state is also accepted if the new state has a lower energy. Each sweep over the lattice is called a Monte Carlo cycle (mcs). After a given number of mcs, the expectation values of the system will have reached equilibrium and the most likely configuration is reached. There can still be variations in $E$ an $|M|$, but they will fluctuate around a given value. This is called the thermalisation time. In order to get good estimates for the expectation values, the sampling should start after the thermalization time is reached. 
+is compared with a number $r$ given by a random number generator (RNG) with an uniform probability distribution. If $w \geq r$, the new state is accepted. The new state is also accepted if the new state has a lower energy. Each sweep over the lattice is called a Monte Carlo cycle or Monte Carlo sweep (mcs). After a given number of mcs, the expectation values of the system will have reached equilibrium and the most likely configuration is reached. There can still be variations in $E$ an $|M|$, but they will fluctuate around a given value. This is called the thermalisation time, where mcs is used as an unit of time. In order to get good estimates for the expectation values, the sampling should start after the thermalization time is reached. 
 
 
-\begin{algorithm}[htbp]\label{alg:met}\caption{Metropolis' algorithm for solving The Ising model.}
+\begin{algorithm}[htbp]\label{alg:met}\caption{Metropolis' algorithm for solving the Ising model.}
 	\SetAlgoLined
 	\BlankLine
 	\BlankLine
@@ -107,12 +107,12 @@ is compared with a number $r$ given by a random number generator (RNG) with an u
 \end{algorithm}
 
 \subsubsection{Probability distribution of the energies}
-One of the properties of the Ising model addressed in this report is the probability distribution of the energy states $p(E)$. In order to determine the distribution, the number of times each energy appears after the termalization time is counted, and then divided by the total number of samples. This is done for temperatures 1.0 $k_BT/J$ and 2.4 $k_BT/J$. The resulting probability distribution is then compared with the variance of the energy, given as
+One of the properties of the Ising model addressed in this report is the probability distribution of the energy states $p(E)$. In order to determine the distribution, the number of times each energy appears after the termalization time is counted, and then divided by the total number of samples. This is done for temperatures 1.0 and 2.4. The resulting probability distribution is then compared with the variance of the energy, given as
 \begin{equation}
  \sigma_E^2 = \left\langle E^2\right\rangle - \left\langle E\right\rangle^2 .
 \end{equation}  
  
 \subsection{Implementation}
-Algorithm \ref{alg:met} can be calculation-heavy when using a large number of Monte Carlo cycles. In order to get a more efficient code, the calculations are parallelised. This is done using MPI. Each CPU is assigned only a fraction of the total number of $mcs$, and then all the  expectation values are collected and the mean is calculated. 
+Algorithm \ref{alg:met} can be calculation-heavy when using a large number of Monte Carlo cycles. In order to get a more efficient code, the calculations are parallelised. This is done using MPI. Each CPU is assigned only a fraction of the total number of mcs, and then all the  expectation values are collected and the mean is calculated. 
 
-All programs are written in C++, using python3.6 to produce figures and tables.   
+All programs are written in C++, using python3.6 together with Numpy, Matplotlib and Seaborn to produce figures and tables. The code can be found in the GitHub repository of alpsjur\footnote{https://github.com/alpsjur/FYS3150prosjekt4}.

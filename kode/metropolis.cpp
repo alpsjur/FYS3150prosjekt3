@@ -12,7 +12,7 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
     w[i*4] = exp(-beta*J*(i*4-8));
   }
   double E = 0; double M = 0;
-  count = 0; 
+  count = 0;
   initialize(L, spinMatrix, values, E, M, J, ordered);
   //går gjennom gitt antall monte carlo sykluser (mcs)
   for (int i = 0; i < mcs; ++i){
@@ -35,7 +35,7 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
         //teller antall ganger ny tilstand aksepteres
         count++;
         if (i > stabilizedMCS){
-          //beregner sannsynliget for energitilstandene
+          //oppdaterer sannsynliget for energitilstandene
           p[(int)-E]++;
           sumP ++;
         }
@@ -51,6 +51,7 @@ void solveGivenT(int L, int mcs, double T, double k, double J, double *values,
     }
   }
   for (int i = 0; i < 1000; i++){
+    //normaliserer sannsynlighetene
     p[i] /= sumP;
   }
 }
@@ -103,7 +104,7 @@ double calculateTotalEnergy(int L, imat spinMatrix, double J){
 void calculateVarNormalize(double *values, int L, int mcs, int stabilizedMCS, int numprocs){
   double nSpins = L*L;
   for (int i = 0; i < 5; ++i){
-    values[i] /= (double) (mcs-stabilizedMCS*numprocs);    //beregner gjennomsnittet av samplesene
+    values[i] /= (double) (mcs-stabilizedMCS*numprocs);            //beregner gjennomsnittet av samplesene
   }
   values[1] = (values[1]-values[0]*values[0])/nSpins;              //beregner variansen til E per spinn
   values[3] = (values[3]-values[2]*values[2])/nSpins;              //beregner variansen til M per spinn

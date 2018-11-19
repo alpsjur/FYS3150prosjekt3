@@ -1,9 +1,14 @@
+'''
+Kode for å plotte dataen generert med den paralelliserte koden
+'''
+
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import numpy as np
 import seaborn as sns
 
 def plotRunningMean(ax, path, filename, nVar):
+    #plotter løpende gjennomsnitt til en variabel mot T
     data = np.loadtxt(path+filename)
     T = data[:,0]; var = data[:,nVar];
     #print(var)
@@ -17,18 +22,21 @@ def plotRunningMean(ax, path, filename, nVar):
     return linecolor
 
 def plotVarT(ax, path, filename, nVar):
+    #plotter en variabel mot T
     data = np.loadtxt(path+filename)
     T = data[:,0]; var = data[:,nVar];
     #print(var)
     ax.plot(T,var, marker='.')
 
 def findTc(path, filename, nVar):
+    #finner maksimalpunkt og maksimalverdi til en varabel som funksjon av T
     data = np.loadtxt(path+filename)
     T = data[:,0]; var = data[:,nVar];
     indexTc = np.argmax(var)
     return T[indexTc], var[indexTc]
 
 def findTcInf(path, files, runningMean = False):
+    #beregner kritisk temperatur for uendelig stort nett
     Tc = []
     Tc_inf = []
     for i in range(len(files)):
@@ -62,6 +70,7 @@ names=["energy.pdf","heat_capacity.pdf","magnetization.pdf","susceptibility.pdf"
 files = ["metropolis40.dat", "metropolis60.dat", "metropolis80.dat", "metropolis100.dat"]
 files_zoom = ["metropolis40_zoom.dat","metropolis60_zoom.dat", "metropolis80_zoom.dat", "metropolis100_zoom.dat"]
 
+#plotter E, M, C og Chi mot T, lav oppløsning
 for i in [1,2,3,4]:
     fig, ax = plt.subplots()
     for file in files:
@@ -72,7 +81,7 @@ for i in [1,2,3,4]:
     #plt.savefig(figdir+names[i-1])
 
 
-'''
+#plotter C mot T, med løpende gjennomsnitt, høy oppløsning
 for i in [2]:
     fig, ax = plt.subplots()
     colors = []
@@ -89,6 +98,7 @@ for i in [2]:
     #plt.savefig(figdir+"zoom.pdf")
 
 
+#Printer beregnet kritisk temperatur
 Tc, std = findTcInf(path, files)
 print("Forventningsverdi Tc: ", Tc, "Standardavvik: ", std)
 
@@ -98,7 +108,6 @@ print("Forventningsverdi Tc: ", Tc_zoom, "Standardavvik: ", std_zoom)
 Tc_zoom, std_zoom = findTcInf(path, files_zoom, runningMean = True)
 print("Forventningsverdi Tc: ", Tc_zoom, "Standardavvik: ", std_zoom)
 
-'''
 
 
 plt.show()
